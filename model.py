@@ -33,8 +33,8 @@ class Animal(db.Model):
 
     __tablename__ = "animals"
 
-    animal_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    animal_name = db.Column(db.String, nullable=False)
+    animal_id = db.Column(db.Integer, primary_key=True, autoincrement=False)
+    name = db.Column(db.String, nullable=False)
 
     favorites = db.relationship("Favorite", back_populates="animal")
 
@@ -43,14 +43,36 @@ class Animal(db.Model):
         return f"<Animal animal_id={self.animal_id} animal_name={self.animal_name}>"
 
 
+class Shelter(db.Model):
+    """Information about shelter."""
+
+    __tablename__ = "shelter"
+
+    shelter_id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    address = db.Column(db.String)
+    city = db.Column(db.String)
+    state = db.Column(db.String)
+    zipcode = db.Column(db.String)
+
+    def __repr__(self):
+
+        return f"<Shelter shelter_id={self.shelter_id} shelter_name={self.name}>"
+
+
 class Favorite(db.Model):
     """Favorite pet"""
 
     __tablename__ = "favorites"
 
+    # __table_args__= (db.UniqueConstraint('user_id', 'animal_id'), )
+
     fav_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     animal_id = db.Column(db.Integer, db.ForeignKey("animals.animal_id"))
+    animal_name = db.Column(db.String)
+    animal_type = db.Column(db.String(10))
+    image = db.Column(db.String(200), nullable=True)
 
     user = db.relationship("User", back_populates="favorites")
     animal = db.relationship("Animal", back_populates="favorites")

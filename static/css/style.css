@@ -1,0 +1,197 @@
+/* 
+ * Always set the map height explicitly to define the size of the div element
+ * that contains the map. 
+ */
+ #map {
+    height: 100%;
+  }
+
+  body {
+    padding-top: 5%;
+    /* display: flex; */
+	  justify-content: left;
+	  height: 100vh;
+    background-color: rgb(204, 189, 204);
+  }
+
+  img {
+    height: 300px;
+  }
+
+  .category {
+    height: 200px
+  }
+  /* @media (max-width: 979px) {
+    body {
+      padding-top: 0px;
+    }
+  } */
+
+/**** Flash Messages Style ****/
+  .flash-msg {
+    padding: 12px;
+    border-radius: 3px;
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+  }
+
+  .flash-msg-info {
+    border: 2px solid rgb(104, 79, 188);
+    background-color: rgb(37, 180, 35);
+    color: white;
+  }
+
+  .flash-msg-warning {
+    border: 2px solid rgb(255, 255, 0);
+    background-color: rgb(180, 40, 35);
+    color: white;
+  }
+
+/**** Nav Bar Style ****/
+.navbar-custom{
+  background-color: #A6BB8D;
+  color: #ff083d;
+
+}
+
+/* change the brand and text color */
+.navbar-custom .navbar-brand,
+.navbar-custom .navbar-text {
+  color: #c55e6e;
+}
+
+/* change the link color */
+.navbar-custom .navbar-nav .nav-link {
+  color: rgba(57, 14, 198, 0.878);
+}
+
+/* change the color of active or hovered links */
+.navbar-custom .nav-item.active .nav-link,
+.navbar-custom .nav-item:hover .nav-link {
+  color: #b5234c;
+}
+
+/* for dropdown only - change the color of droodown */
+.navbar-custom .dropdown-menu {
+  background-color: #ff5500;
+}
+
+.navbar-custom .dropdown-item {
+  color: #ffffff;
+}
+
+.navbar-custom .dropdown-item:hover,
+.navbar-custom .dropdown-item:focus {
+  color: #FA7070;
+  background-color: rgba(255,255,255,.5);
+}
+
+/**** Modal Forms Style ****/
+
+/* body { */
+	/* display: flex; */
+	/* justify-content: center; */
+	/* align-items: center; */
+	/* height: 100vh; */
+  /* background-color: thistle; */
+/* } */
+.modal-body {
+  padding: 0;
+}
+
+.modal-content{
+  background-color: #A6BB8D;
+}
+
+.btn-close {
+  position: absolute;
+  right: 0;
+  padding: 1em;
+}
+
+.form-area h1 {
+  font-size: 2.3em;
+  font-weight: bold;
+}
+
+.form-area {
+	padding: 3em;
+	max-width: 100%;
+	color: #fff;
+	box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.5);
+}
+
+.form-control {
+  background-color: inherit;
+  color: #fff;
+  padding-left: 0;
+  border: 1px solid #fff;
+  border-radius: 0;
+}
+
+.form-area .btn {
+	width: 100%;
+	font-weight: 800;
+	background-color: #fff;
+	padding: 0.5em 0;
+	border-radius: 50px;
+}
+
+/* .btn.btn-primary {
+	padding: 7px 20px;
+	font-family: alfa slab one;
+	font-size: 16px;
+	letter-spacing: 2px;
+	border-radius: 50px;
+  background-color: #FA7070;
+} */
+
+.form-area .btn:hover {
+  background-color: inherit;
+  color: #fff;
+  border-color: #fff;
+}
+
+.form-area p {
+  text-align: center;
+  padding-top: 2em;
+  color: #fff;
+}
+
+.form-area p a {
+  color: #e1e1e1;
+  text-decoration: none;
+}
+
+.form-area p a:hover {
+    color: #fff;
+  }
+
+.modal-backdrop {
+  z-index: auto;
+}
+
+#SignUpModalForm.active,
+#SignInModalForm.active{
+  top: 50%;
+  transition: .5s;
+  visibility: visible;
+  opacity: 1;
+}
+
+.collapse.active{
+  filter:blur(20px);
+  transition: .5s;
+  pointer-events: none;
+}
+
+  /* @media (max-width: 600px){
+    .form-area{
+        padding: 1.5em;
+    }
+    .form-area h1{
+        font-size: 18px;
+    }
+  } */
+
+

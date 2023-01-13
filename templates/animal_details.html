@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}{{context['title']}}{% endblock %}
+
+{% block body %}
+<h1>{{ context['header'] }}</h1>
+
+
+<p>{{ animal['name'] }}</p>
+{% if animal.get('photos') %}
+<img src="{{ animal['photos'][0]['medium'] }}">
+{% endif %}
+<p>{{ animal['description'] }}<a href="{{animal['url']}}">Read more about {{ animal['name']|title }}</a></p>
+<p>Gender: {{ animal['gender'] }}</p>
+<p>Color: {{ animal['colors']['primary'] }}</p>
+<p>Size: {{ animal['size'] }}</p>
+<p id="city">City: {{ animal['contact']['address']['city'] }}, {{ animal['contact']['address']['state'] }}</p>
+<p id="zipcode" data-zipcode="{{ animal['contact']['address']['postcode'] }}">Zipcode: {{ animal['contact']['address']['postcode'] }}</p>
+<p id="address">Address: {{ animal['contact']['address']['address1'] }}</p>
+<!-- <script>console.log(address)</script> -->
+<p>Contact: {{ animal['contact']['email'] }}</p>
+<p id="org-id" data-org-id="{{ animal['organization_id'] }}"></p>
+
+<!-- Button to favorite the animal -->
+<a href="/favorite/{{animal['id']}}" class="btn btn-primary">Favorite</a><br><br>
+
+
+<!-- Inserting Google Map to show the location of the shelter where chosen animal is -->
+<div id="map" style="height: 350px; width: 350px;"></div>
+<script src="/static/js/map.js"></script>
+
+<!-- Google Maps -->
+<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtCWjHEQ_rLq4u313xIR0sCLt7yIuV5SM&callback=initMap"></script>
+<script></script>
+
+{% endblock %}

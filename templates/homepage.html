@@ -2,30 +2,50 @@
 {% block title %}Pet Shelter Home{% endblock %}
 
 {% block body %}
-  <h1>Welcome!</h1>
+<div class="container">
+  <h1>This is a homepage</h1>
 
-  <h2>Navigation</h2>
-  <ul>
-    <li><a href="/animals">View all animals</a></li>
-    <li><a href="/users">View all users</a></li>
-  </ul>
 
-  <h2>Create an Account</h2>
-  <form action="/users" method="POST">
-    <p>Email <input type="text" name="email"></p>
+  <!-- Mount your react components on to this element. -->
+  <div id="app"></div>
 
-    <p>Password <input type="password" name="password"></p>
-
-    <p><input type="submit"></p>
+  <form action="">
+    <label for="animal_type" id="animal_type">Animal type</label><br>
+    <input list="animals" type="text">
+    <datalist id="animals">
+      <option value="dog"/>
+      <option value="cat"/>
+      <option value="rabbit"/>
+      <option value="bird"/>
+    </datalist><br>
+    
+    <label for="breed">breed</label><br>
+    <select id="breed" name="breed">
+      {% for breed in dog_breeds %}
+      <option value="{{ breed }}">{{ breed }}</option>
+      {% endfor %}
+    </select><br>
+    
+    <!-- <input type="text" id="animal_type" name="animal_type" placeholder="Search dog, cat, rabbit or bird"><br> -->
+    <label for="location">Location</label><br>
+    <input type="text" id="location" name="location" placeholder="Enter city, state or zipcode"><br>
+    <input type="submit" value="Go">
   </form>
 
-    <h2>Log In</h2>
-    <form action="/login" method="POST">
-        <p>Email <input type="text" name="email"></p>
-
-        <p>Password <input type="password" name="password"></p>
-
-        <p><input type="submit"></p>
-    </form>
+  <div class="row">
+    <div class="col">
+      <a href="/animals/dog"><img src="/static/img/dog.jpg" class="category" height="200px"><br>Search dogs</a><br>
+    </div>
+    <div class="col">
+      <a href="/animals/cat"><img src="/static/img/cat.jpg" class="category" height="200px"><br>Search cats</a><br>
+    </div>
+    <div class="col">
+      <a href="/animals/rabbit"><img src="/static/img/rabbit.jpg" class="category" height="200px"><br>Search rabbits</a><br>
+    </div>
+    <div class="col">
+      <a href="/animals/bird"><img src="/static/img/bird.jpg" class="category" height="200px"><br>Search birds</a><br>
+    </div>
+  </div>
+</div>
 {% endblock %}
 

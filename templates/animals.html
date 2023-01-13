@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}View Available Pets{% endblock %}
+
+{% block body %}
+  <h1>Pets for Adoption</h1>
+  {% if animals|length > 0 %}
+  <ul>
+    {% for animal in animals %}
+      
+      <li><a href="/{{ animal['type']|lower }}/{{ animal['organization_id'] }}/{{ animal['id']}}">
+        {% if animal['photos']|length > 0 %}
+        <img src="{{ animal['photos'][0]['full'] }}"><br>
+        {% else %}
+          {% if animal['type'] == 'Dog' %}
+          <img src="https://media.istockphoto.com/id/942318196/vector/dog-puppy-smiling-funny-animals-coloring-pages-cartoon-vector-illustration.jpg?s=612x612&w=0&k=20&c=VmV1zfZ56Kulm6nbf3wzeZfef3DwIHpT22lt4dK52nA="><br>
+          {% elif animal['type'] == 'Cat' %}
+          <img src="https://i.etsystatic.com/7867651/r/il/929251/1234114682/il_1588xN.1234114682_1t12.jpg"><br>
+          {% elif animal['type'] == 'Rabbit' %}
+          <img src="https://i.etsystatic.com/21185388/r/il/dc90fa/2226677215/il_1588xN.2226677215_6bov.jpg"><br>
+          {% elif animal['type'] == 'Bird' %}
+          <img src="https://i.etsystatic.com/33889596/r/il/1e530a/3744462889/il_1588xN.3744462889_4k4v.jpg"><br>
+          {% endif %}
+        {% endif %}
+        {{ animal['name'] }}</a><br>
+        {{ animal['breeds']['primary'] }}</li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p>No results found</p>
+  {% endif %}
+
+{% endblock %}
