@@ -1,7 +1,7 @@
 """CRUD operations."""
 
 from flask import session
-from model import db, User, Animal, Favorite, connect_to_db
+from model import db, User, Animal, Favorite, Breed, ViewedAnimal, connect_to_db
 from datetime import datetime
 import requests
 import os
@@ -15,7 +15,8 @@ class local:
 def create_user(first_name, last_name, email, password_hash, phone, address, city, state, zipcode, created_at):
     """Create and return a new user."""
 
-    user = User(first_name=first_name, last_name=last_name, email=email, password_hash=password_hash, phone=phone, address=address, city=city, state=state, zipcode=zipcode, created_at=created_at)
+    user = User(first_name=first_name, last_name=last_name, email=email, password_hash=password_hash, phone=phone,
+    address=address, city=city, state=state, zipcode=zipcode, created_at=created_at)
 
     return user
 
@@ -65,7 +66,7 @@ def get_animals():
     return Animal.query.all()
 
 
-def create_favorite(user, animal_id, name, type, image):
+def create_favorite(user, animal_id, name, type, image, org_id):
 
     animal_id = int(animal_id)
     liked_animal = Animal().query.get(animal_id)
@@ -76,12 +77,12 @@ def create_favorite(user, animal_id, name, type, image):
     db.session.add(liked_animal)
     favorite = Favorite().query.filter_by(user_id=user, animal_id=animal_id).first()
     if not favorite:
-        favorite = Favorite()
-        favorite.user_id = user
-        favorite.animal_id = animal_id
-        favorite.animal_name = name
-        favorite.animal_type = type
-        favorite.image = image
+        favorite = Favorite(user_id=user, animal_id=animal_id, animal_name=name, animal_type=type, image=image, org_id=org_id)
+        # favorite.user_id = user
+        # favorite.animal_id = animal_id
+        # favorite.animal_name = name
+        # favorite.animal_type = type
+        # favorite.image = image
     db.session.add(favorite)
     db.session.commit()
     return favorite
@@ -94,7 +95,6 @@ def delete_favorite(user_id, animal_id):
     db.session.delete(unfavorite)
     db.session.commit()
     return
-
 
 
 def get_favorite():
@@ -149,39 +149,21 @@ def get_animals_view(animal_type, zipcode=None):
     
     res = res.json()
     response = res['animals']
-    # print(response)
     return response
 
-    # headers = {
-    #     'Authorization': 'Bearer ' + local.token,
-    # }
-    # if zipcode:
-    #     res = requests.get(f'https://api.petfinder.com/v2/animals?type={animal_type}&limit=100&location={zipcode}&distance=50&sort=distance', headers=headers)
-    
-    # else:
-    #     res = requests.get(f'https://api.petfinder.com/v2/animals?type={animal_type}&limit=100', headers=headers)
-    
-    # res = res.json()
-    # response = res['animals']
-    # return response
 
-
-def search_animals_with_keyword(string, location):
+def search_animals_by_breed(breed, location):
+    """Send API request to get animals by the breed & zipcode."""
+    
     headers = {
         'Authorization': 'Bearer ' + local.token,
     }
-    res = requests.get(f'https://api.petfinder.com/v2/types/{type}/breeds')
-    res = requests.get(f'https://api.petfinder.com/v2/animals?type={animal_type}&limit=100&location={zipcode}&distance=50&sort=distance', headers=headers)    
+    
+    res = requests.get(f'https://api.petfinder.com/v2/animals?breed={breed}&limit=100&location={location}&distance=100&sort=distance', headers=headers)    
 
-    # if zipcode:
-        # filtered_res = list()
-        # for animal in res:
-        #     print(f"{int(animal['contact']['address']['postcode'])}-{int(zipcode)}")
-        #     if  int(animal['contact']['address']['postcode'])==int(zipcode):
-        #         print(animal)
-        #         filtered_res.append(animal)
-        # res = filtered_res.copy()
-        # res = list(filter(lambda item: (int(item['contact']['address']['postcode'])==int(zipcode)), res))
+    res = res.json()
+    response = res['animals']
+    return response
 
 
 def get_animal_by_id(animal_id):
@@ -294,21 +276,70 @@ def get_rabbit_breeds():
     for item in response:
         breeds.append(item['name'])
     return breeds
+
+
+def get_bird_breeds():
+    """Getting all bird breeds."""
+
+    headers = {
+    'Authorization': 'Bearer ' + local.token,
+    }
+    res = requests.get(f'https://api.petfinder.com/v2/types/bird/breeds', headers=headers)
+
+    # If response came back with Error 401 due to expired token, renewing the token via POST request and sending the GET request again
+    if res.status_code == 401:
+        get_token()
+        headers = {
+            'Authorization': 'Bearer ' + local.token,
+            }
+        res = requests.get(f'https://api.petfinder.com/v2/types/bird/breeds', headers=headers)
+
+    res = res.json()
+    response = res['breeds']
+    breeds = []
+    for item in response:
+        breeds.append(item['name'])
+    return breeds
     
 
-def get_geocode():
-    return
+def create_breed(animal_type, breed_name):
+    """Create and return a new breed."""
 
-    # headers = {
-    # 'Authorization': 'Bearer ' + local.token,
-    # }
-    # res = requests.get(f'https://api.petfinder.com/v2/animals/{animal_id}', headers=headers)
-    # res = res.json()
-    
-    # response = res['animal']
-    # return response
+    breed = Breed(animal_type=animal_type, breed_name=breed_name)
+
+    return breed
 
 
+def get_breeds_by_animal_type(animal_type):
+    """Return breeds by animal type."""
+
+    breeds = Breed.query.filter(Breed.animal_type == animal_type).all()
+    result = []
+    for breed in breeds:
+        result.append(breed.breed_name)
+    return result
+
+
+def create_viewed_animal(user_id, animal_id, name, type, image, org_id):
+    """Track each viewed animal by particular user and add it to the database."""
+
+    animal_id = int(animal_id)
+    animal = Animal().query.get(animal_id)
+    if not animal:
+        animal = Animal(animal_id=animal_id, name=name)
+        db.session.add(animal)
+    viewed_animal = ViewedAnimal().query.filter_by(user_id=user_id, animal_id=animal_id).first()
+    if not viewed_animal:
+        viewed_animal = ViewedAnimal(user_id=user_id, animal_id=animal_id, animal_name=name, animal_type=type, image=image, org_id=org_id)
+        db.session.add(viewed_animal)
+    db.session.commit()
+
+    return viewed_animal
+
+
+def get_viewed_by_user_id(user_id):
+
+    return ViewedAnimal.query.filter(ViewedAnimal.user_id == user_id).all()
 
 if __name__ == '__main__':
     from server import app

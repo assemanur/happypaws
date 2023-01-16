@@ -1,36 +1,65 @@
 {% extends 'base.html' %}
 {% block title %}Pet Shelter Home{% endblock %}
 
+{% block head %}
+<script type="text/javascript">
+  function populate(s1, s2) {
+    var s1 = document.getElementById(s1);
+    var s2 = document.getElementById(s2);
+    s2.innerHTML = "";
+
+    if (s1.value == "dog") {
+      var breeds = {{ dog_breeds|safe }};
+    } else if (s1.value == "cat") {
+      var breeds = {{ cat_breeds|safe }};
+    } else if (s1.value == "rabbit") {
+      var breeds = {{ rabbit_breeds|safe }};
+    } else if (s1.value == "bird") {
+      var breeds = {{ bird_breeds|safe }};
+    }
+
+    for (var breed of breeds) {
+      var newOption = document.createElement("option");
+      newOption.value = breed;
+      newOption.innerHTML = breed;
+      s2.options.add(newOption);
+    }
+  }
+</script>
+{% endblock %}
+
 {% block body %}
 <div class="container">
   <h1>This is a homepage</h1>
 
 
   <!-- Mount your react components on to this element. -->
-  <div id="app"></div>
+  
+  
 
-  <form action="">
-    <label for="animal_type" id="animal_type">Animal type</label><br>
-    <input list="animals" type="text">
-    <datalist id="animals">
-      <option value="dog"/>
-      <option value="cat"/>
-      <option value="rabbit"/>
-      <option value="bird"/>
-    </datalist><br>
-    
-    <label for="breed">breed</label><br>
-    <select id="breed" name="breed">
-      {% for breed in dog_breeds %}
-      <option value="{{ breed }}">{{ breed }}</option>
-      {% endfor %}
+  <form id="animal-search" action="/" method="post">
+
+    <label for="animal_type" id="animal_type">Animal type:</label><br>
+    <select class="get_animal_type" id="type" name="type" onchange="populate('type', 'breed')">
+      <option value="">Choose animal type</option>
+      <option value="dog">Dog</option>
+      <option value="cat">Cat</option>
+      <option value="rabbit">Rabbit</option>
+      <option value="bird">Bird</option>
     </select><br>
-    
-    <!-- <input type="text" id="animal_type" name="animal_type" placeholder="Search dog, cat, rabbit or bird"><br> -->
-    <label for="location">Location</label><br>
-    <input type="text" id="location" name="location" placeholder="Enter city, state or zipcode"><br>
-    <input type="submit" value="Go">
+
+
+    <label for="breed">Breed:</label><br>
+    <select class="get_animal_breed" id="breed" name="breed">
+      <option value="">Choose breed</option>
+    </select><br>
+
+    <label for="location">Zipcode:</label><br>
+    <input type="text" pattern="[0-9]{5}" id="location" name="location" placeholder="Enter 5-digit zipcode"><br>
+    <input type="submit" value="Search"><br>
   </form>
+
+  
 
   <div class="row">
     <div class="col">
@@ -47,5 +76,16 @@
     </div>
   </div>
 </div>
+
+{% for viewed_animal in viewed_animals %}
+<ul>
+  <li>{{ viewed_animal }}</li>
+</ul>
+{% endfor %}
+
+
 {% endblock %}
+
+
+
 

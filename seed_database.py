@@ -61,5 +61,27 @@ model.db.session.add_all(users_in_db)
 #     favorite = crud.create_favorite(random_user, random_animal)
 #     model.db.session.add(favorite)
 
+dog_breeds = crud.get_dog_breeds()
+cat_breeds = crud.get_cat_breeds()
+rabbit_breeds = crud.get_rabbit_breeds()
+bird_breeds = crud.get_bird_breeds()
 
+breeds_in_db = []
+for breed in dog_breeds:
+    db_breed = crud.create_breed(animal_type="dog", breed_name=breed)
+    breeds_in_db.append(db_breed)
+
+for breed in cat_breeds:
+    db_breed = crud.create_breed(animal_type="cat", breed_name=breed)
+    breeds_in_db.append(db_breed)
+
+for breed in rabbit_breeds:
+    db_breed = crud.create_breed(animal_type="rabbit", breed_name=breed)
+    breeds_in_db.append(db_breed)
+
+for breed in bird_breeds:
+    db_breed = crud.create_breed(animal_type="bird", breed_name=breed)
+    breeds_in_db.append(db_breed)
+
+model.db.session.add_all(breeds_in_db)
 model.db.session.commit()

@@ -23,6 +23,7 @@ class User(db.Model):
     created_at = db.Column(db.String, nullable=True)
 
     favorites = db.relationship("Favorite", back_populates="user")
+    viewed = db.relationship("ViewedAnimal", back_populates="user")
 
     def __repr__(self):
         return f"<User user_id={self.user_id} email={self.email}>"
@@ -37,6 +38,7 @@ class Animal(db.Model):
     name = db.Column(db.String, nullable=False)
 
     favorites = db.relationship("Favorite", back_populates="animal")
+    viewed = db.relationship("ViewedAnimal", back_populates="animal")
 
     def __repr__(self):
 
@@ -73,12 +75,47 @@ class Favorite(db.Model):
     animal_name = db.Column(db.String)
     animal_type = db.Column(db.String(10))
     image = db.Column(db.String(200), nullable=True)
+    org_id = db.Column(db.String)
 
     user = db.relationship("User", back_populates="favorites")
     animal = db.relationship("Animal", back_populates="favorites")
 
     def __repr__(self):
         return f"<Favorite fav_id={self.fav_id} animal_id={self.animal_id}>"
+
+    
+
+class Breed(db.Model):
+    """Adding animals breeds to the database."""
+
+    __tablename__ = "breeds"
+
+    breed_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    animal_type = db.Column(db.String)
+    breed_name = db.Column(db.String)
+
+    def __repr__(self):
+        return f"<Breed animal_type={self.animal_type} breed_name={self.breed_name}>"
+
+
+class ViewedAnimal(db.Model):
+
+    __tablename__ = "viewed_animals"
+
+    view_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+    animal_id = db.Column(db.Integer, db.ForeignKey("animals.animal_id"))
+    animal_name = db.Column(db.String)
+    animal_type = db.Column(db.String(10))
+    image = db.Column(db.String(200), nullable=True)
+    org_id = db.Column(db.String)
+
+    user = db.relationship("User", back_populates="viewed")
+    animal = db.relationship("Animal", back_populates="viewed")
+
+    def __repr__(self):
+        return f"<Viewed by user_id={self.user_id} animal_id={self.animal_id}>"
+    
 
 
 def connect_to_db(flask_app, db_uri="postgresql:///pet_shelter", echo=True):

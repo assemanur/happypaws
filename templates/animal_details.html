@@ -33,4 +33,37 @@
 <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtCWjHEQ_rLq4u313xIR0sCLt7yIuV5SM&callback=initMap"></script>
 <script></script>
 
+
+<div class="recently-viewed">
+    {% if recently_viewed_animals != []  %}
+    <h3>Recently viewed animals</h3>
+    {% for recent_animal in recently_viewed_animals %}
+    <ul>
+        <li>
+            {% if recent_animal['image'] %}
+                {% if recent_animal['animal_type'] == 'dog' %}
+                <a href="/dog/{{ recent_animal['org_id'] }}/{{ recent_animal['animal_id'] }}">
+                    {{ recent_animal['animal_name'] }}<br>
+                    <img src="{{ recent_animal['image'] }}"><br></a>
+                {% elif recent_animal['animal_type'] == 'cat' %}
+                <a href="/cat/{{ recent_animal['org_id'] }}/{{ recent_animal['animal_id'] }}">
+                    {{ recent_animal['animal_name'] }}<br>
+                    <img src="{{ recent_animal['image'] }}"><br></a>
+                {% elif recent_animal['animal_type'] == 'rabbit' %}
+                <a href="/rabbit/{{ recent_animal['org_id'] }}/{{ recent_animal['animal_id'] }}">
+                    {{ recent_animal['animal_name'] }}<br>
+                    <img src="{{ recent_animal['image'] }}"><br></a>
+                {% elif recent_animal['animal_type'] == 'bird' %}
+                <a href="/bird/{{ recent_animal['org_id'] }}/{{ recent_animal['animal_id'] }}">
+                    {{ recent_animal['animal_name'] }}<br>
+                    <img src="{{ recent_animal['image'] }}"><br></a>
+                {% endif %}
+            {% endif %}
+        </li>
+    </ul>
+    {% endfor %}
+    {% else %}
+    {% endif %}
+</div>
+
 {% endblock %}

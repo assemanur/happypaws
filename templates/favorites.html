@@ -9,19 +9,19 @@
         <li>
             {% if favorite['image'] %}
                 {% if favorite['animal_type'] == 'dog' %}
-                <a href="/dog/{{ favorite['animal_id'] }}">
+                <a href="/dog/{{ favorite['org_id'] }}/{{ favorite['animal_id'] }}">
                     {{ favorite['animal_name'] }}<br>
                     <img src="{{ favorite['image'] }}"><br></a>
                 {% elif favorite['animal_type'] == 'cat' %}
-                <a href="/cat/{{ favorite['animal_id'] }}">
+                <a href="/cat/{{ favorite['org_id'] }}/{{ favorite['animal_id'] }}">
                     {{ favorite['animal_name'] }}<br>
                     <img src="{{ favorite['image'] }}"><br></a>
                 {% elif favorite['animal_type'] == 'rabbit' %}
-                <a href="/rabbit/{{ favorite['animal_id'] }}">
+                <a href="/rabbit/{{ favorite['org_id'] }}/{{ favorite['animal_id'] }}">
                     {{ favorite['animal_name'] }}<br>
                     <img src="{{ favorite['image'] }}"><br></a>
                 {% elif favorite['animal_type'] == 'bird' %}
-                <a href="/bird/{{ favorite['animal_id'] }}">
+                <a href="/bird/{{ favorite['org_id'] }}/{{ favorite['animal_id'] }}">
                     {{ favorite['animal_name'] }}<br>
                     <img src="{{ favorite['image'] }}"><br></a>
                 {% endif %}
