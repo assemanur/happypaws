@@ -10,12 +10,17 @@
 {% if organization.get('photos') %}
 <img src="{{ organization['photos'][0]['medium'] }}">
 {% endif %}
-<p><a href="{{ organization['website'] }}">Go to {{ organization['name'] }}'s website.</a><br></p>
-<p id="city">City: {{ organization['address']['city'] }}, {{ organization['address']['state'] }}</p>
-<p id="zipcode" data-zipcode="{{ organization['address']['postcode'] }}">Zipcode: {{ organization['address']['postcode'] }}</p>
+{% if organization.get('website') %}
+<p>Go to {{ organization['name'] }}'s <a href="{{ organization['website'] }}">website</a>.</p>
+{% endif %}
+<p id="city">{{ organization['address']['city'] }}, {{ organization['address']['state'] }}, {{ organization['address']['postcode'] }}</p>
+<p id="zipcode" data-zipcode="{{ organization['address']['postcode'] }}"></p>
 
 <!-- <script>console.log(address)</script> -->
-<p>Contact: {{ organization['email'] }}</p>
+<p><a href="mailto:{{ organization['email'] }}?subject=Inquiry from HappyPaws user&body=Hi, I am interested in your adopting policy. Could you please send me the application form and details on the application process? ">{{ organization['email'] }}</a></p><br>
+{% if organization.get('phone') %}
+<p>Phone: {{ organization['phone'] }}</p><br>
+{% endif %}
 <p id="org-id" data-org-id="{{ organization['id'] }}"></p>
 
 
@@ -24,7 +29,7 @@
 <script src="/static/js/map.js"></script>
 
 <!-- Google Maps -->
-<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtCWjHEQ_rLq4u313xIR0sCLt7yIuV5SM&callback=initMap"></script>
+<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtCWjHEQ_rLq4u313xIR0sCLt7yIuV5SM&callback=initOrgMap"></script>
 <script></script>
 
 

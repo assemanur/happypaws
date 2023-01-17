@@ -16,13 +16,24 @@
 <p>Size: {{ animal['size'] }}</p>
 <p id="city">City: {{ animal['contact']['address']['city'] }}, {{ animal['contact']['address']['state'] }}</p>
 <p id="zipcode" data-zipcode="{{ animal['contact']['address']['postcode'] }}">Zipcode: {{ animal['contact']['address']['postcode'] }}</p>
+{% if animal['contact']['address'].get('address1') %}
 <p id="address">Address: {{ animal['contact']['address']['address1'] }}</p>
-<!-- <script>console.log(address)</script> -->
-<p>Contact: {{ animal['contact']['email'] }}</p>
+{% endif %}
+
+<p>Contact: <a href="mailto:{{ animal['contact']['email'] }}?subject=Inquiry about {{ animal['name'] }} id:{{ animal['id'] }} from HappyPaws user&body=Hi, I am interested in adopting {{ animal['name'] }} ({{ animal['id'] }}). Could you please send me the application form and details on the application process? ">{{ animal['contact']['email'] }}</a></p>
+
 <p id="org-id" data-org-id="{{ animal['organization_id'] }}"></p>
+
 
 <!-- Button to favorite the animal -->
 <a href="/favorite/{{animal['id']}}" class="btn btn-primary">Favorite</a><br><br>
+
+
+<!-- Button to email shelter -->
+<a href="mailto:{{ animal['contact']['email'] }}?subject=Inquiry about {{ animal['name'] }} id:{{ animal['id'] }} from HappyPaws user&
+body=Hi, I am interested in adopting {{ animal['name'] }} ({{ animal['id'] }}). 
+Could you please send me the application form and details on the application process? "
+class="btn btn-primary">Send Email Inquiry</a><br><br>
 
 
 <!-- Inserting Google Map to show the location of the shelter where chosen animal is -->
@@ -31,7 +42,7 @@
 
 <!-- Google Maps -->
 <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtCWjHEQ_rLq4u313xIR0sCLt7yIuV5SM&callback=initMap"></script>
-<script></script>
+<script></script><br><br>
 
 
 <div class="recently-viewed">
@@ -59,7 +70,7 @@
                     <img src="{{ recent_animal['image'] }}"><br></a>
                 {% endif %}
             {% endif %}
-        </li>
+        </li><br><br>
     </ul>
     {% endfor %}
     {% else %}
