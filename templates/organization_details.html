@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}View Organization{% endblock %}
+
+{% block body %}
+<h1>Organizations Nearby</h1>
+
+
+<p>{{ organization['name'] }}</p>
+{% if organization.get('photos') %}
+<img src="{{ organization['photos'][0]['medium'] }}">
+{% endif %}
+<p><a href="{{ organization['website'] }}">Go to {{ organization['name'] }}'s website.</a><br></p>
+<p id="city">City: {{ organization['address']['city'] }}, {{ organization['address']['state'] }}</p>
+<p id="zipcode" data-zipcode="{{ organization['address']['postcode'] }}">Zipcode: {{ organization['address']['postcode'] }}</p>
+
+<!-- <script>console.log(address)</script> -->
+<p>Contact: {{ organization['email'] }}</p>
+<p id="org-id" data-org-id="{{ organization['id'] }}"></p>
+
+
+<!-- Inserting Google Map to show the location of the shelter where chosen animal is -->
+<div id="map" style="height: 350px; width: 350px;"></div>
+<script src="/static/js/map.js"></script>
+
+<!-- Google Maps -->
+<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtCWjHEQ_rLq4u313xIR0sCLt7yIuV5SM&callback=initMap"></script>
+<script></script>
+
+
+{% endblock %}

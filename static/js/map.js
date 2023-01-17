@@ -22,7 +22,7 @@ function initMap() {
 
   const basicMap = new google.maps.Map(document.querySelector('#map'),{
     center: animalCoords,
-    zoom: 9,
+    zoom: 12,
   });
   
 

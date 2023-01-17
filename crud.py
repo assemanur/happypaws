@@ -185,13 +185,12 @@ def get_animal_by_id(animal_id):
 
     return response
 
-
-def add_shelter(shelter_id):
+def get_organizations(zipcode):
 
     headers = {
     'Authorization': 'Bearer ' + local.token,
     }
-    res = requests.get(f'https://api.petfinder.com/v2/organizations/{shelter_id}', headers=headers)
+    res = requests.get(f'https://api.petfinder.com/v2/organizations/?location={zipcode}&sort=distance', headers=headers)
 
     # If response came back with Error 401 due to expired token, renewing the token via POST request and sending the GET request again
     if res.status_code == 401:
@@ -199,7 +198,27 @@ def add_shelter(shelter_id):
         headers = {
             'Authorization': 'Bearer ' + local.token,
             }
-        res = requests.get(f'https://api.petfinder.com/v2/organizations/{shelter_id}', headers=headers)
+        res = requests.get(f'https://api.petfinder.com/v2/organizations/?location={zipcode}&sort=distance', headers=headers)
+
+    res = res.json()
+    response = res['organizations']
+    return response
+
+
+def get_organization(org_id):
+
+    headers = {
+    'Authorization': 'Bearer ' + local.token,
+    }
+    res = requests.get(f'https://api.petfinder.com/v2/organizations/{org_id}', headers=headers)
+
+    # If response came back with Error 401 due to expired token, renewing the token via POST request and sending the GET request again
+    if res.status_code == 401:
+        get_token()
+        headers = {
+            'Authorization': 'Bearer ' + local.token,
+            }
+        res = requests.get(f'https://api.petfinder.com/v2/organizations/{org_id}', headers=headers)
 
     res = res.json()
     response = res['organization']

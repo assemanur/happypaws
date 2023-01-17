@@ -258,6 +258,34 @@ def show_bird_details(org_id, animal_id):
     return render_template('animal_details.html', context=context, animal=animal, recently_viewed_animals=recently_viewed)
 
 
+@app.route('/view/organizations')
+def show_organizations():
+    """Get a view of organizations nearby."""
+
+    logged_in_email = session.get("user_email")
+    if logged_in_email is None:
+        zipcode = session.get('zipcode')
+    else:
+        user = crud.get_user_by_email(logged_in_email)
+        if user.zipcode == None:
+            zipcode = session.get('zipcode')
+        else:
+            zipcode = user.zipcode
+
+    organizations=crud.get_organizations(zipcode=zipcode)
+    
+    return render_template('organizations.html', organizations=organizations)
+
+
+@app.route('/view/organizations/<org_id>')
+def show_organization_details(org_id):
+    """Show details of selected organization."""
+
+    organization = crud.get_organization(org_id)
+
+    return render_template('organization_details.html', organization=organization)
+
+
 @app.route('/favorite/<animal_id>')
 def favorite_animal(animal_id):
     """Add the animal to favorites list"""
