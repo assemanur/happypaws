@@ -9,6 +9,8 @@
 <p>{{ organization['name'] }}</p>
 {% if organization.get('photos') %}
 <img src="{{ organization['photos'][0]['medium'] }}">
+{% else %}
+<img src="/static/img/organization.jpg">
 {% endif %}
 {% if organization.get('website') %}
 <p>Go to {{ organization['name'] }}'s <a href="{{ organization['website'] }}">website</a>.</p>
@@ -19,7 +21,7 @@
 <!-- <script>console.log(address)</script> -->
 <p><a href="mailto:{{ organization['email'] }}?subject=Inquiry from HappyPaws user&body=Hi, I am interested in your adopting policy. Could you please send me the application form and details on the application process? ">{{ organization['email'] }}</a></p><br>
 {% if organization.get('phone') %}
-<p>Phone: {{ organization['phone'] }}</p><br>
+<p><a href="tel:{{ organization['phone'] }}">Phone: {{ organization['phone'] }}</a></p><br>
 {% endif %}
 <p id="org-id" data-org-id="{{ organization['id'] }}"></p>
 
@@ -28,8 +30,31 @@
 <div id="map" style="height: 350px; width: 350px;"></div>
 <script src="/static/js/map.js"></script>
 
+<h3>Animals available for adoption at {{ organization['name'] }}</h3>
+<ul>
+    {% for animal in animals %}
+      
+      <li><a href="/{{ animal['type']|lower }}/{{ animal['organization_id'] }}/{{ animal['id']}}">
+        {% if animal['photos']|length > 0 %}
+        <img src="{{ animal['photos'][0]['full'] }}"><br>
+        {% else %}
+          {% if animal['type'] == 'Dog' %}
+          <img src="https://media.istockphoto.com/id/942318196/vector/dog-puppy-smiling-funny-animals-coloring-pages-cartoon-vector-illustration.jpg?s=612x612&w=0&k=20&c=VmV1zfZ56Kulm6nbf3wzeZfef3DwIHpT22lt4dK52nA="><br>
+          {% elif animal['type'] == 'Cat' %}
+          <img src="https://i.etsystatic.com/7867651/r/il/929251/1234114682/il_1588xN.1234114682_1t12.jpg"><br>
+          {% elif animal['type'] == 'Rabbit' %}
+          <img src="https://i.etsystatic.com/21185388/r/il/dc90fa/2226677215/il_1588xN.2226677215_6bov.jpg"><br>
+          {% elif animal['type'] == 'Bird' %}
+          <img src="https://i.etsystatic.com/33889596/r/il/1e530a/3744462889/il_1588xN.3744462889_4k4v.jpg"><br>
+          {% endif %}
+        {% endif %}
+        {{ animal['name']|safe|title }}</a><br>
+        {{ animal['breeds']['primary'] }}</li>
+    {% endfor %}
+  </ul>
+
 <!-- Google Maps -->
-<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtCWjHEQ_rLq4u313xIR0sCLt7yIuV5SM&callback=initOrgMap"></script>
+<script async src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initOrgMap"></script>
 <script></script>
 
 

@@ -12,7 +12,7 @@
         {% if organization['photos']|length > 0 %}
         <img src="{{ organization['photos'][0]['full'] }}"><br>
         {% else %}
-          <img src="https://media.istockphoto.com/id/942318196/vector/dog-puppy-smiling-funny-animals-coloring-pages-cartoon-vector-illustration.jpg?s=612x612&w=0&k=20&c=VmV1zfZ56Kulm6nbf3wzeZfef3DwIHpT22lt4dK52nA="><br>
+          <img src="/static/img/organization.jpg"><br>
         {% endif %}
         {{ organization['name'] }}</a><br>
         {{ organization['address']['city'] }}</li>

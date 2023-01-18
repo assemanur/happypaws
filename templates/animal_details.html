@@ -6,7 +6,7 @@
 <h1>{{ context['header'] }}</h1>
 
 
-<p>{{ animal['name'] }}</p>
+<p>{{ animal['name']|safe|title }}</p>
 {% if animal.get('photos') %}
     {% if animal['photos']|length > 1 %}
         {% for photo in animal['photos'] %}
@@ -25,7 +25,7 @@
 , {{ animal['breeds']['secondary'] }}
 {% endif %}</p>
 <p>{% if animal['description'] %}
-    {{ animal['description'] }}<a href="{{animal['url']}}">Read more about {{ animal['name']|title }}</a>
+    {{ animal['description']|safe }}<a href="{{animal['url']}}">Read more about {{ animal['name']|safe|title }}</a>
 {% endif %}</p>
 <p>Gender: {{ animal['gender'] }}</p>
 <p>{% if animal['colors']['primary'] %}Color: {{ animal['colors']['primary'] }}
@@ -35,10 +35,11 @@
 </p>
 <p>Size: {{ animal['size'] }}</p>
 <p>{% if animal['environment']['children'] or animal['environment']['dogs'] or animal['environment']['cats'] %}
-    {{ animal['name'] }} is good at home with: 
+    {{ animal['name']|safe|title }} is good at home with: 
     {% if animal['environment']['children'] and animal['environment']['dogs'] and animal['environment']['cats'] %}children, dogs, and cats
     {% elif animal['environment']['children'] and animal['environment']['dogs'] %}children and dogs
     {% elif animal['environment']['children'] and animal['environment']['cats'] %}children and cats
+    {% elif animal['environment']['children'] %}children
     {% elif animal['environment']['dogs'] and animal['environment']['cats'] %}dogs and cats
     {% elif animal['environment']['dogs'] %}dogs
     {% elif animal['environment']['cats'] %}cats
@@ -46,11 +47,9 @@
 {% endif %}</p>
 <p id="city">City: {{ animal['contact']['address']['city'] }}, {{ animal['contact']['address']['state'] }}, {{ animal['contact']['address']['postcode'] }}</p>
 <p id="zipcode" data-zipcode="{{ animal['contact']['address']['postcode'] }}"></p>
-{% if animal['contact']['address'].get('address1') %}
-<p id="address">Address: {{ animal['contact']['address']['address1'] }}</p>
-{% endif %}
 
-<p>Contact: <a href="mailto:{{ animal['contact']['email'] }}?subject=Inquiry about {{ animal['name'] }} id:{{ animal['id'] }} from HappyPaws user&body=Hi, I am interested in adopting {{ animal['name'] }} ({{ animal['id'] }}). Could you please send me the application form and details on the application process? ">{{ animal['contact']['email'] }}</a></p>
+
+<p>Contact: <a href="mailto:{{ animal['contact']['email'] }}?subject=Inquiry about {{ animal['name']|safe|title }} id:{{ animal['id'] }} from HappyPaws user&body=Hi, I am interested in adopting {{ animal['name']|safe|title }} ({{ animal['id'] }}). Could you please send me the application form and details on the application process? ">{{ animal['contact']['email'] }}</a></p>
 
 <p id="org-id" data-org-id="{{ animal['organization_id'] }}"></p>
 
@@ -60,8 +59,8 @@
 
 
 <!-- Button to email shelter -->
-<a href="mailto:{{ animal['contact']['email'] }}?subject=Inquiry about {{ animal['name'] }} id:{{ animal['id'] }} from HappyPaws user&
-body=Hi, I am interested in adopting {{ animal['name'] }} ({{ animal['id'] }}). 
+<a href="mailto:{{ animal['contact']['email'] }}?subject=Inquiry about {{ animal['name']|safe|title }} id:{{ animal['id'] }} from HappyPaws user&
+body=Hi, I am interested in adopting {{ animal['name']|safe|title }} ({{ animal['id'] }}). 
 Could you please send me the application form and details on the application process? "
 class="btn btn-primary">Send Email Inquiry</a><br><br>
 
@@ -71,7 +70,7 @@ class="btn btn-primary">Send Email Inquiry</a><br><br>
 <script src="/static/js/map.js"></script>
 
 <!-- Google Maps -->
-<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtCWjHEQ_rLq4u313xIR0sCLt7yIuV5SM&callback=initMap"></script>
+<script async src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initMap"></script>
 <script></script><br><br>
 
 
@@ -84,19 +83,19 @@ class="btn btn-primary">Send Email Inquiry</a><br><br>
             {% if recent_animal['image'] %}
                 {% if recent_animal['animal_type'] == 'dog' %}
                 <a href="/dog/{{ recent_animal['org_id'] }}/{{ recent_animal['animal_id'] }}">
-                    {{ recent_animal['animal_name'] }}<br>
+                    {{ recent_animal['animal_name']|safe|title }}<br>
                     <img src="{{ recent_animal['image'] }}"><br></a>
                 {% elif recent_animal['animal_type'] == 'cat' %}
                 <a href="/cat/{{ recent_animal['org_id'] }}/{{ recent_animal['animal_id'] }}">
-                    {{ recent_animal['animal_name'] }}<br>
+                    {{ recent_animal['animal_name']|safe|title }}<br>
                     <img src="{{ recent_animal['image'] }}"><br></a>
                 {% elif recent_animal['animal_type'] == 'rabbit' %}
                 <a href="/rabbit/{{ recent_animal['org_id'] }}/{{ recent_animal['animal_id'] }}">
-                    {{ recent_animal['animal_name'] }}<br>
+                    {{ recent_animal['animal_name']|safe|title }}<br>
                     <img src="{{ recent_animal['image'] }}"><br></a>
                 {% elif recent_animal['animal_type'] == 'bird' %}
                 <a href="/bird/{{ recent_animal['org_id'] }}/{{ recent_animal['animal_id'] }}">
-                    {{ recent_animal['animal_name'] }}<br>
+                    {{ recent_animal['animal_name']|safe|title }}<br>
                     <img src="{{ recent_animal['image'] }}"><br></a>
                 {% endif %}
             {% endif %}

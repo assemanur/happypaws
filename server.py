@@ -127,9 +127,9 @@ def show_dog_details(org_id, animal_id):
         recently_viewed = crud.get_viewed_by_user_id(user_id)
         print(f"\033[35m█▓▒░ | {name} has been added to viewed table \033[0m")
 
-    # shelter_id = crud.add_shelter(org_id)
+    
 
-    return render_template('animal_details.html', context=context, animal=animal, recently_viewed_animals=recently_viewed)
+    return render_template('animal_details.html', context=context, animal=animal, recently_viewed_animals=recently_viewed, google_maps_api_key=GOOGLE_MAPS_KEY)
 
 
 @app.route('/cat/<org_id>/<animal_id>')
@@ -171,7 +171,7 @@ def show_cat_details(org_id, animal_id):
         print(f"\033[35m█▓▒░ | {name} has been added to viewed table \033[0m")
     # shelter_id = crud.add_shelter(org_id)
 
-    return render_template('animal_details.html', context=context, animal=animal, recently_viewed_animals=recently_viewed)
+    return render_template('animal_details.html', context=context, animal=animal, recently_viewed_animals=recently_viewed, google_maps_api_key=GOOGLE_MAPS_KEY)
 
 
 @app.route('/rabbit/<org_id>/<animal_id>')
@@ -213,7 +213,7 @@ def show_rabbit_details(org_id, animal_id):
         print(f"\033[35m█▓▒░ | {name} has been added to viewed table \033[0m")
     # shelter_id = crud.add_shelter(org_id)
 
-    return render_template('animal_details.html', context=context, animal=animal, recently_viewed_animals=recently_viewed)
+    return render_template('animal_details.html', context=context, animal=animal, recently_viewed_animals=recently_viewed, google_maps_api_key=GOOGLE_MAPS_KEY)
 
 
 @app.route('/bird/<org_id>/<animal_id>')
@@ -255,7 +255,7 @@ def show_bird_details(org_id, animal_id):
         print(f"\033[35m█▓▒░ | {name} has been added to viewed table \033[0m")
     # shelter_id = crud.add_shelter(org_id)
 
-    return render_template('animal_details.html', context=context, animal=animal, recently_viewed_animals=recently_viewed)
+    return render_template('animal_details.html', context=context, animal=animal, recently_viewed_animals=recently_viewed, google_maps_api_key=GOOGLE_MAPS_KEY)
 
 
 @app.route('/view/organizations')
@@ -282,8 +282,9 @@ def show_organization_details(org_id):
     """Show details of selected organization."""
 
     organization = crud.get_organization(org_id)
+    animals = crud.get_animals_by_organization(org_id)
 
-    return render_template('organization_details.html', organization=organization)
+    return render_template('organization_details.html', organization=organization, animals=animals, google_maps_api_key=GOOGLE_MAPS_KEY)
 
 
 @app.route('/favorite/<animal_id>')

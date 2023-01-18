@@ -24,7 +24,7 @@
           <img src="https://i.etsystatic.com/33889596/r/il/1e530a/3744462889/il_1588xN.3744462889_4k4v.jpg"><br>
           {% endif %}
         {% endif %}
-        {{ animal['name'] }}</a><br>
+        {{ animal['name']|safe|title }}</a><br>
         {{ animal['breeds']['primary'] }}</li>
     {% endfor %}
   </ul>
