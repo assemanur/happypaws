@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 {% block title %}View Available Pets{% endblock %}
 
+
 {% block body %}
+
+
   <h1>Pets for Adoption</h1>
   {% if animals|length > 0 %}
   <ul>
@@ -28,5 +31,7 @@
   {% else %}
   <p>No results found</p>
   {% endif %}
+
+
 
 {% endblock %}

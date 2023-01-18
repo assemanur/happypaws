@@ -29,11 +29,12 @@
 {% endblock %}
 
 {% block body %}
-<div class="container">
+
+
+
+<div id="page" class="container">
   <h1>This is a homepage</h1>
 
-
-  <!-- Mount your react components on to this element. -->
   
   
 
@@ -77,6 +78,8 @@
   </div>
 </div>
 
+
+
 {% for viewed_animal in viewed_animals %}
 <ul>
   <li>{{ viewed_animal }}</li>
@@ -86,6 +89,8 @@
 <div>
   <a href="/view/organizations"><img src="/static/img/shelter.jpg" class="category" height="200px"><br>Search organizations</a><br>
 </div>
+
+
 
 {% endblock %}
 

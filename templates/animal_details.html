@@ -8,14 +8,44 @@
 
 <p>{{ animal['name'] }}</p>
 {% if animal.get('photos') %}
-<img src="{{ animal['photos'][0]['medium'] }}">
+    {% if animal['photos']|length > 1 %}
+        {% for photo in animal['photos'] %}
+        <img src="{{ photo['medium'] }}">
+        {% endfor %}
+    {% else %}
+        <img src="{{ animal['photos'][0]['medium'] }}">
+    {% endif %}
 {% endif %}
-<p>{{ animal['description'] }}<a href="{{animal['url']}}">Read more about {{ animal['name']|title }}</a></p>
+<p>{% if animal['tags'] %}Charachteristics: 
+{% for tag in animal['tags'] %}
+{{ tag }}, 
+{% endfor %}{% endif %}</p>
+<p>Breed: {{ animal['breeds']['primary'] }}
+{% if animal['breeds']['secondary'] %}
+, {{ animal['breeds']['secondary'] }}
+{% endif %}</p>
+<p>{% if animal['description'] %}
+    {{ animal['description'] }}<a href="{{animal['url']}}">Read more about {{ animal['name']|title }}</a>
+{% endif %}</p>
 <p>Gender: {{ animal['gender'] }}</p>
-<p>Color: {{ animal['colors']['primary'] }}</p>
+<p>{% if animal['colors']['primary'] %}Color: {{ animal['colors']['primary'] }}
+    {% if animal['colors']['secondary'] is not none %}
+    , {{ animal['colors']['secondary'] }}
+    {% endif %}{% endif %}
+</p>
 <p>Size: {{ animal['size'] }}</p>
-<p id="city">City: {{ animal['contact']['address']['city'] }}, {{ animal['contact']['address']['state'] }}</p>
-<p id="zipcode" data-zipcode="{{ animal['contact']['address']['postcode'] }}">Zipcode: {{ animal['contact']['address']['postcode'] }}</p>
+<p>{% if animal['environment']['children'] or animal['environment']['dogs'] or animal['environment']['cats'] %}
+    {{ animal['name'] }} is good at home with: 
+    {% if animal['environment']['children'] and animal['environment']['dogs'] and animal['environment']['cats'] %}children, dogs, and cats
+    {% elif animal['environment']['children'] and animal['environment']['dogs'] %}children and dogs
+    {% elif animal['environment']['children'] and animal['environment']['cats'] %}children and cats
+    {% elif animal['environment']['dogs'] and animal['environment']['cats'] %}dogs and cats
+    {% elif animal['environment']['dogs'] %}dogs
+    {% elif animal['environment']['cats'] %}cats
+    {% endif %}
+{% endif %}</p>
+<p id="city">City: {{ animal['contact']['address']['city'] }}, {{ animal['contact']['address']['state'] }}, {{ animal['contact']['address']['postcode'] }}</p>
+<p id="zipcode" data-zipcode="{{ animal['contact']['address']['postcode'] }}"></p>
 {% if animal['contact']['address'].get('address1') %}
 <p id="address">Address: {{ animal['contact']['address']['address1'] }}</p>
 {% endif %}
