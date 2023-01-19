@@ -3,7 +3,6 @@
 import os
 import json
 from random import choice
-from datetime import datetime
 
 import crud
 import model
@@ -33,9 +32,8 @@ for user in users_data:
         user["state"],
         user["zipcode"],
     )
-    created_at = datetime.strptime(user["created_at"], "%m/%d/%Y")
 
-    db_users = crud.create_user(first_name, last_name, email, password_hash, phone, address, city, state, zipcode, created_at)
+    db_users = crud.create_user(first_name, last_name, email, password_hash, phone, address, city, state, zipcode)
     users_in_db.append(db_users)
 
 model.db.session.add_all(users_in_db)
@@ -61,6 +59,7 @@ model.db.session.add_all(users_in_db)
 #     favorite = crud.create_favorite(random_user, random_animal)
 #     model.db.session.add(favorite)
 
+"""Sending API request to get all breeds for dogs, cats, rabbits, and birds."""
 dog_breeds = crud.get_dog_breeds()
 cat_breeds = crud.get_cat_breeds()
 rabbit_breeds = crud.get_rabbit_breeds()

@@ -3,15 +3,15 @@
 {% block title %}{{ user.first_name }}'s Profile{% endblock %}
 
 {% block body %}
-<h1>{{ user.email }}</h1>
+<!-- <h1>{{ user.email }}</h1>
 
 <p>First name: {{ user.first_name }}</p>
 <p>Last name: {{ user.last_name }}</p>
 <p>Phone number: {{ user.phone }}</p>
 
-<p>Zip code: {{ user.zipcode }}</p>
+<p>Zip code: {{ user.zipcode }}</p> -->
 <!-- Button to update zipcode -->
-<a href="/user/update/zipcode" class="btn btn-primary">Edit</a><br><br>
+<!-- <a href="/user/update/zipcode" class="btn btn-primary">Edit</a><br><br> -->
 
 <div>
 <h3>Update Zip Code</h3>
@@ -34,17 +34,21 @@
                 <div class="user-details">
                     <h5 class="user-name">{{ user.first_name }} {{ user.last_name }}</h5>
                     <h6 class="user-email">{{ user.email }}</h6><br>
-                    <h5>About</h5>
-                    <p>Here is some info about user.</p>
+                    <p>Phone number: {{ user.phone }}</p>
+                    <h5>Location</h5>
+                    <p>{% if user.address %}Address: {{ user.address }}{% endif %}</p>
+                    <p>{% if user.city %}City: {{ user.city }}{% endif %}</p>
+                    <p>{% if user.state %}State: {{ user.state }}{% endif %}</p>
+                    <p>Zip code: {{ user.zipcode }}</p>
                 </div>
             </div>
         </div>
     </div>
     </div>
     <div class="col-xl-7 col-lg-7 col-md-6 col-sm-12 col-12">
+        <form action="/user/update/form" method="post">
     <div class="card h-100">
         <div class="card-body">
-            <form action="/user/update/zipcode" method="post">
             <div class="row gutters">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <h6 class="mb-2 text-primary">Personal Details</h6>
@@ -52,25 +56,19 @@
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label for="first-name">First Name</label>
-                        <input type="text" class="form-control" id="first-name" placeholder="Enter first name">
+                        <input type="text" class="form-control" id="first-name" name="first-name" placeholder="Enter first name">
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label for="last-name">Last Name</label>
-                        <input type="text" class="form-control" id="last-name" placeholder="Enter last name">
-                    </div>
-                </div>
-                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div class="form-group">
-                        <label for="eMail">Email</label>
-                        <input type="email" class="form-control" id="eMail" placeholder="Enter email">
+                        <input type="text" class="form-control" id="last-name" name="last-name" placeholder="Enter last name">
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label for="phone">Phone</label>
-                        <input type="text" class="form-control" id="phone" placeholder="Enter phone number">
+                        <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter phone number">
                     </div>
                 </div>
             </div>
@@ -81,32 +79,32 @@
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label for="street">Street</label>
-                        <input type="name" class="form-control" id="street" placeholder="Enter Street">
+                        <input type="text" class="form-control" id="street" name="street" placeholder="Enter Street">
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label for="city">City</label>
-                        <input type="name" class="form-control" id="city" placeholder="Enter City">
+                        <input type="text" class="form-control" id="city" name="city" placeholder="Enter City">
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label for="state">State</label>
-                        <input type="text" class="form-control" id="state" placeholder="Enter State">
+                        <input type="text" class="form-control" id="state" name="state" placeholder="Enter State">
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label for="zip">Zipcode</label>
-                        <input type="text" class="form-control" id="zip" placeholder="Enter zipcode" required>
+                        <input type="text" class="form-control" id="zip" name="zip" placeholder="Enter zipcode">
                     </div>
                 </div>
             </div>
             <div class="row gutters">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="text-right">
-                        <button type="button" id="submit" name="submit" class="btn btn-primary" href="/user/update/zipcode">Save changes</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
                     </div>
                 </div>
             </div>

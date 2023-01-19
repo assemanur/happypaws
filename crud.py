@@ -2,7 +2,6 @@
 
 from flask import session
 from model import db, User, Animal, Favorite, Breed, ViewedAnimal, connect_to_db
-from datetime import datetime
 import requests
 import os
 API_KEY = os.environ['PETFINDER_KEY']
@@ -12,11 +11,11 @@ API_SECRET = os.environ['PETFINDER_SECRET']
 class local:
     token = ''
 
-def create_user(first_name, last_name, email, password_hash, phone, address, city, state, zipcode, created_at):
+def create_user(first_name, last_name, email, password_hash, phone, address, city, state, zipcode):
     """Create and return a new user."""
 
     user = User(first_name=first_name, last_name=last_name, email=email, password_hash=password_hash, phone=phone,
-    address=address, city=city, state=state, zipcode=zipcode, created_at=created_at)
+    address=address, city=city, state=state, zipcode=zipcode)
 
     return user
 
@@ -49,6 +48,34 @@ def update_zipcode(email, zipcode):
     """Update user's zipcode."""
     user = User.query.filter(User.email == email).first()
     user.zipcode = zipcode
+
+    return user
+
+
+def update_user_data(email, first_name, last_name, phone, address, city, state, zipcode):
+
+    user = User.query.filter(User.email == email).first()
+    if first_name is not None:
+        user.first_name = first_name
+        
+    if last_name is not None:
+        user.last_name = last_name
+        
+    if phone is not None:
+        user.phone = phone
+        
+    if address is not None:
+        user.address = address
+        
+    if city is not None:
+        user.city = city
+        
+    if state is not None:
+        user.state = state
+        
+    if zipcode is not None:
+        user.zipcode = zipcode
+        
 
     return user
 

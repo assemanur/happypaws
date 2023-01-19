@@ -25,7 +25,8 @@
           {% endif %}
         {% endif %}
         {{ animal['name']|safe|title }}</a><br>
-        {{ animal['breeds']['primary'] }}</li>
+        {{ animal['breeds']['primary'] }}{% if animal['breeds']['secondary'] %} , {{ animal['breeds']['secondary'] }}{% endif %}
+      </li>
     {% endfor %}
   </ul>
   {% else %}

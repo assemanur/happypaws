@@ -20,7 +20,6 @@ class User(db.Model):
     city = db.Column(db.String, nullable=True)
     state = db.Column(db.String, nullable=True)
     zipcode = db.Column(db.Integer, nullable=True)
-    created_at = db.Column(db.String, nullable=True)
 
     favorites = db.relationship("Favorite", back_populates="user")
     viewed = db.relationship("ViewedAnimal", back_populates="user")

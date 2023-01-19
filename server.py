@@ -3,12 +3,7 @@
 from flask import (Flask, render_template, request, flash, session, redirect, jsonify)
 from model import connect_to_db, db
 import crud, os, requests
-from datetime import datetime
 from jinja2 import StrictUndefined
-# from . import views
-
-# app = Flask(__name__)
-# app.register_blueprint(views.login)
 
 
 app = Flask(__name__)
@@ -19,30 +14,36 @@ GEO_API = os.environ['GEOCODING_API']
 GOOGLE_MAPS_KEY = os.environ['GOOGLE_MAPS_KEY']
 GOOGLE_GEOCODING_KEY = os.environ['GOOGLE_GEOCODING_KEY']
 app.jinja_env.undefined = StrictUndefined
-VISITED_ANIMAL_IDS = []
+
 
 
 @app.route('/')
 def homepage():
     """View homepage."""
 
-    # API request for user's geolocation
+    # API request for user's geolocation in case if user profile doesn't have zipcode saved.
     response = requests.get("http://ip-api.com/json/")
     response = response.json()
     zip = response['zip']
     print(zip)
     session["zipcode"] = zip
 
-    # Storing visited URLs in session
-    # logged_in_email = session.get("urls")
-
+    #Sending Petfinder API request to get API token.
     crud.get_token()
+    
     dog_breeds_db = crud.get_breeds_by_animal_type("dog")
     cat_breeds_db = crud.get_breeds_by_animal_type("cat")
     rabbit_breeds_db = crud.get_breeds_by_animal_type("rabbit")
     bird_breeds_db = crud.get_breeds_by_animal_type("bird")
 
-    return render_template('homepage.html', dog_breeds=dog_breeds_db, cat_breeds=cat_breeds_db, rabbit_breeds=rabbit_breeds_db, bird_breeds=bird_breeds_db, viewed_animals=VISITED_ANIMAL_IDS)
+    logged_in_email = session.get("user_email")
+    if not logged_in_email:
+        recently_viewed = []
+    else:
+        user_id = crud.get_user_by_email(logged_in_email).user_id
+        recently_viewed = crud.get_viewed_by_user_id(user_id)
+
+    return render_template('homepage.html', dog_breeds=dog_breeds_db, cat_breeds=cat_breeds_db, rabbit_breeds=rabbit_breeds_db, bird_breeds=bird_breeds_db, recently_viewed_animals=recently_viewed)
 
 
 @app.route('/', methods=["POST"])
@@ -53,7 +54,6 @@ def search_with_keyword():
     print(f"\033[36m█▓▒░ | Search form has been submitted \033[0m")
     animals = crud.search_animals_by_breed(breed, location)
     
-    # return render_template('animals.html', animals=crud.get_animals_view(type, location))
     return render_template('animals.html', animals=animals)
 
 
@@ -76,20 +76,6 @@ def show_animals(animal_type):
     return render_template('animals.html', animals=animals)
 
 
-@app.route("/api/geocode")
-def geo_code():
-
-    address = '1450 Rollins Road'
-
-    res = requests.get(f'https://api.opencagedata.com/geocode/v1/json?q={address}&key={GEO_API}')
-    res = res.json()
-    response = res['results'][0]['geometry']
-
-    print(response)
-
-    return redirect('/')
-
-
 @app.route('/dog/<org_id>/<animal_id>')
 def show_dog_details(org_id, animal_id):
     """View detailed information about the dog with specific id."""
@@ -100,12 +86,11 @@ def show_dog_details(org_id, animal_id):
     }
 
     animal=crud.get_animal_by_id(animal_id)
+
+    # Storing viewed animal to the database
     logged_in_email = session.get("user_email")
     if not logged_in_email:
-        VISITED_ANIMAL_IDS.append(animal_id)
-        print(f"\033[35m█▓▒░ | Animal id added into session \033[0m")
-        print(animal_id)
-        print(VISITED_ANIMAL_IDS)
+        recently_viewed = []
     else:
         user_id = crud.get_user_by_email(logged_in_email).user_id
         name = animal.get('name')
@@ -125,11 +110,9 @@ def show_dog_details(org_id, animal_id):
                 image = "https://i.etsystatic.com/33889596/r/il/1e530a/3744462889/il_1588xN.3744462889_4k4v.jpg"
         viewed_animal = crud.create_viewed_animal(user_id, animal_id, name, type, image, org_id)
         recently_viewed = crud.get_viewed_by_user_id(user_id)
-        print(f"\033[35m█▓▒░ | {name} has been added to viewed table \033[0m")
+        print(f"\033[35m█▓▒░ | {name} has been added to viewed_animals table \033[0m")
 
-    
-
-    return render_template('animal_details.html', context=context, animal=animal, recently_viewed_animals=recently_viewed, google_maps_api_key=GOOGLE_MAPS_KEY)
+    return render_template('animal_details.html', context=context, animal=animal, recently_viewed_animals=recently_viewed, google_maps_api_key=GOOGLE_MAPS_KEY, google_geo_key=GOOGLE_GEOCODING_KEY)
 
 
 @app.route('/cat/<org_id>/<animal_id>')
@@ -142,13 +125,11 @@ def show_cat_details(org_id, animal_id):
     }
 
     animal=crud.get_animal_by_id(animal_id)
+
     # Storing viewed animal to the database
     logged_in_email = session.get("user_email")
     if not logged_in_email:
-        VISITED_ANIMAL_IDS.append(animal_id)
-        print(f"\033[35m█▓▒░ | Animal id added into session \033[0m")
-        print(animal_id)
-        print(VISITED_ANIMAL_IDS)
+        recently_viewed = []
     else:
         user_id = crud.get_user_by_email(logged_in_email).user_id
         name = animal.get('name')
@@ -168,10 +149,9 @@ def show_cat_details(org_id, animal_id):
                 image = "https://i.etsystatic.com/33889596/r/il/1e530a/3744462889/il_1588xN.3744462889_4k4v.jpg"
         viewed_animal = crud.create_viewed_animal(user_id, animal_id, name, type, image, org_id)
         recently_viewed = crud.get_viewed_by_user_id(user_id)
-        print(f"\033[35m█▓▒░ | {name} has been added to viewed table \033[0m")
-    # shelter_id = crud.add_shelter(org_id)
+        print(f"\033[35m█▓▒░ | {name} has been added to viewed_animals table \033[0m")
 
-    return render_template('animal_details.html', context=context, animal=animal, recently_viewed_animals=recently_viewed, google_maps_api_key=GOOGLE_MAPS_KEY)
+    return render_template('animal_details.html', context=context, animal=animal, recently_viewed_animals=recently_viewed, google_maps_api_key=GOOGLE_MAPS_KEY, google_geo_key=GOOGLE_GEOCODING_KEY)
 
 
 @app.route('/rabbit/<org_id>/<animal_id>')
@@ -184,13 +164,11 @@ def show_rabbit_details(org_id, animal_id):
     }
 
     animal=crud.get_animal_by_id(animal_id)
+
     # Storing viewed animal to the database
     logged_in_email = session.get("user_email")
     if not logged_in_email:
-        VISITED_ANIMAL_IDS.append(animal_id)
-        print(f"\033[35m█▓▒░ | Animal id added into session \033[0m")
-        print(animal_id)
-        print(VISITED_ANIMAL_IDS)
+        recently_viewed = []
     else:
         user_id = crud.get_user_by_email(logged_in_email).user_id
         name = animal.get('name')
@@ -210,10 +188,9 @@ def show_rabbit_details(org_id, animal_id):
                 image = "https://i.etsystatic.com/33889596/r/il/1e530a/3744462889/il_1588xN.3744462889_4k4v.jpg"
         viewed_animal = crud.create_viewed_animal(user_id, animal_id, name, type, image, org_id)
         recently_viewed = crud.get_viewed_by_user_id(user_id)
-        print(f"\033[35m█▓▒░ | {name} has been added to viewed table \033[0m")
-    # shelter_id = crud.add_shelter(org_id)
+        print(f"\033[35m█▓▒░ | {name} has been added to viewed_animals table \033[0m")
 
-    return render_template('animal_details.html', context=context, animal=animal, recently_viewed_animals=recently_viewed, google_maps_api_key=GOOGLE_MAPS_KEY)
+    return render_template('animal_details.html', context=context, animal=animal, recently_viewed_animals=recently_viewed, google_maps_api_key=GOOGLE_MAPS_KEY, google_geo_key=GOOGLE_GEOCODING_KEY)
 
 
 @app.route('/bird/<org_id>/<animal_id>')
@@ -226,13 +203,11 @@ def show_bird_details(org_id, animal_id):
     }
 
     animal=crud.get_animal_by_id(animal_id)
+
     # Storing viewed animal to the database
     logged_in_email = session.get("user_email")
     if not logged_in_email:
-        VISITED_ANIMAL_IDS.append(animal_id)
-        print(f"\033[35m█▓▒░ | Animal id added into session \033[0m")
-        print(animal_id)
-        print(VISITED_ANIMAL_IDS)
+        recently_viewed = []
     else:
         user_id = crud.get_user_by_email(logged_in_email).user_id
         name = animal.get('name')
@@ -252,10 +227,9 @@ def show_bird_details(org_id, animal_id):
                 image = "https://i.etsystatic.com/33889596/r/il/1e530a/3744462889/il_1588xN.3744462889_4k4v.jpg"
         viewed_animal = crud.create_viewed_animal(user_id, animal_id, name, type, image, org_id)
         recently_viewed = crud.get_viewed_by_user_id(user_id)
-        print(f"\033[35m█▓▒░ | {name} has been added to viewed table \033[0m")
-    # shelter_id = crud.add_shelter(org_id)
+        print(f"\033[35m█▓▒░ | {name} has been added to viewed_animals table \033[0m")
 
-    return render_template('animal_details.html', context=context, animal=animal, recently_viewed_animals=recently_viewed, google_maps_api_key=GOOGLE_MAPS_KEY)
+    return render_template('animal_details.html', context=context, animal=animal, recently_viewed_animals=recently_viewed, google_maps_api_key=GOOGLE_MAPS_KEY, google_geo_key=GOOGLE_GEOCODING_KEY)
 
 
 @app.route('/view/organizations')
@@ -284,7 +258,7 @@ def show_organization_details(org_id):
     organization = crud.get_organization(org_id)
     animals = crud.get_animals_by_organization(org_id)
 
-    return render_template('organization_details.html', organization=organization, animals=animals, google_maps_api_key=GOOGLE_MAPS_KEY)
+    return render_template('organization_details.html', organization=organization, animals=animals, google_maps_api_key=GOOGLE_MAPS_KEY, google_geo_key=GOOGLE_GEOCODING_KEY)
 
 
 @app.route('/favorite/<animal_id>')
@@ -316,7 +290,7 @@ def favorite_animal(animal_id):
                 image = "https://i.etsystatic.com/33889596/r/il/1e530a/3744462889/il_1588xN.3744462889_4k4v.jpg"
         favorite = crud.create_favorite(user_id, animal_id, name, type, image, org_id)
         flash(f"{name} has been added to favorites list.", 'info')
-        print(f"\033[36m█▓▒░ | Favorite has been added to db \033[0m")
+        print(f"\033[36m█▓▒░ | Favorite has been added to database \033[0m")
     
     return redirect(request.referrer)
 
@@ -369,7 +343,7 @@ def register_user():
     if user:
         flash("User with this email already exists. Please create account with a different email.", 'warning')
     else:
-        user = crud.create_user(first_name=first_name, last_name=last_name, email=email, password_hash=password, phone=None, address=None, city=None, state=None, zipcode=None, created_at=None)
+        user = crud.create_user(first_name=first_name, last_name=last_name, email=email, password_hash=password, phone=None, address=None, city=None, state=None, zipcode=None)
         db.session.add(user)
         db.session.commit()
         flash("New account has been created. Please log in using your credentials.", 'info')
@@ -437,6 +411,31 @@ def update_user_zipcode():
     flash("Zipcode has been updated.", 'info')
         
     return redirect(f'/user')
+
+
+@app.route('/user/update/form', methods=["POST"])
+def update_user_profile():
+    """Update user details."""
+
+    first_name = request.form.get('first-name', None)
+    last_name = request.form.get('last-name', None)
+    phone = request.form.get('phone', None)
+    address = request.form.get('street', None)
+    city = request.form.get('city', None)
+    state = request.form.get('state', None)
+    zipcode = request.form.get('zip', None)
+    email = session.get('user_email', None)
+    if not email:
+        flash("Please login!", 'warning')
+        return redirect("/")
+    
+    user = crud.update_user_data(email, first_name, last_name, phone, address, city, state, zipcode)
+    db.session.commit()
+    
+    flash("Your profile has been updated.", 'info')
+
+    return redirect(f'/user')
+    
 
 
 if __name__ == "__main__":

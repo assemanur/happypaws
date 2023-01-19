@@ -6,7 +6,7 @@ console.log(zipcode)
   
 function initMap() {
 
-  fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${zipcode}&key=AIzaSyAu7-wLA-0gHG1wQs2uRhuGtaDpyV6hBp0`)
+  fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${zipcode}&key=${googleGeoKey}`)
   .then((response) => {
     return response.json();
   })
