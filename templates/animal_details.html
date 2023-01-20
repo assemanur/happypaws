@@ -77,36 +77,55 @@ class="btn btn-primary">Send Email Inquiry</a><br><br>
 <script></script><br><br>
 
 
-<div class="recently-viewed">
-    {% if recently_viewed_animals != []  %}
-    <h3>Recently viewed animals</h3>
-    {% for recent_animal in recently_viewed_animals %}
-    <ul>
-        <li>
-            {% if recent_animal['image'] %}
-                {% if recent_animal['animal_type'] == 'dog' %}
-                <a href="/dog/{{ recent_animal['org_id'] }}/{{ recent_animal['animal_id'] }}">
-                    {{ recent_animal['animal_name']|safe|title }}<br>
-                    <img src="{{ recent_animal['image'] }}"><br></a>
-                {% elif recent_animal['animal_type'] == 'cat' %}
-                <a href="/cat/{{ recent_animal['org_id'] }}/{{ recent_animal['animal_id'] }}">
-                    {{ recent_animal['animal_name']|safe|title }}<br>
-                    <img src="{{ recent_animal['image'] }}"><br></a>
-                {% elif recent_animal['animal_type'] == 'rabbit' %}
-                <a href="/rabbit/{{ recent_animal['org_id'] }}/{{ recent_animal['animal_id'] }}">
-                    {{ recent_animal['animal_name']|safe|title }}<br>
-                    <img src="{{ recent_animal['image'] }}"><br></a>
-                {% elif recent_animal['animal_type'] == 'bird' %}
-                <a href="/bird/{{ recent_animal['org_id'] }}/{{ recent_animal['animal_id'] }}">
-                    {{ recent_animal['animal_name']|safe|title }}<br>
-                    <img src="{{ recent_animal['image'] }}"><br></a>
-                {% endif %}
-            {% endif %}
-        </li><br><br>
-    </ul>
-    {% endfor %}
-    {% else %}
-    {% endif %}
+
+<div id="recently-viewed">
+{% if recently_viewed_animals != []  %}
+<h3>Recently viewed animals</h3>
+<div class="row row-cols-md-3 g-5">{% for recent_animal in recently_viewed_animals %}
+  <div class="col">{% if recent_animal['animal_type'] == 'dog' %}
+    <a href="/dog/{{ recent_animal['org_id'] }}/{{ recent_animal['animal_id'] }}">
+    <div class="card h-100">{% if recent_animal['image'] %}
+      <img src="{{ recent_animal['image'] }}" class="card-img-top" alt="animal">
+      <div class="card-body">
+        <h5 class="card-title">{{ recent_animal['animal_name']|safe|title }}</h5>
+        <p class="card-text">{{ recent_animal['breed'] }}</p>
+      </div>
+      {% endif %}
+    </div></a>
+    {% elif recent_animal['animal_type'] == 'cat' %}
+          <a href="/cat/{{ recent_animal['org_id'] }}/{{ recent_animal['animal_id'] }}">
+            <div class="card h-100">{% if recent_animal['image'] %}
+              <img src="{{ recent_animal['image'] }}" class="card-img-top" alt="animal">
+              <div class="card-body">
+                <h5 class="card-title">{{ recent_animal['animal_name']|safe|title }}</h5>
+                <p class="card-text">{{ recent_animal['breed'] }}</p>
+              </div>
+              {% endif %}
+            </div></a>
+    {% elif recent_animal['animal_type'] == 'rabbit' %}
+          <a href="/rabbit/{{ recent_animal['org_id'] }}/{{ recent_animal['animal_id'] }}">
+            <div class="card h-100">{% if recent_animal['image'] %}
+              <img src="{{ recent_animal['image'] }}" class="card-img-top" alt="animal">
+              <div class="card-body">
+                <h5 class="card-title">{{ recent_animal['animal_name']|safe|title }}</h5>
+                <p class="card-text">{{ recent_animal['breed'] }}</p>
+              </div>
+              {% endif %}
+            </div></a>
+    {% elif recent_animal['animal_type'] == 'bird' %}
+          <a href="/bird/{{ recent_animal['org_id'] }}/{{ recent_animal['animal_id'] }}">
+            <div class="card h-100">{% if recent_animal['image'] %}
+              <img src="{{ recent_animal['image'] }}" class="card-img-top" alt="animal">
+              <div class="card-body">
+                <h5 class="card-title">{{ recent_animal['animal_name']|safe|title }}</h5>
+                <p class="card-text">{{ recent_animal['breed'] }}</p>
+              </div>
+              {% endif %}
+            </div></a>
+  {% endif %}
+</div>
+{% endfor %}</div>
+{% endif %}
 </div>
 
 {% endblock %}
