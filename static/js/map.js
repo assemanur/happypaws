@@ -1,9 +1,8 @@
 'use strict';
 
 const zipcode = document.querySelector('#zipcode').dataset.zipcode;
-console.log(zipcode)
 
-  
+// Initializing map on animal_details page
 function initMap() {
 
   fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${zipcode}&key=${googleGeoKey}`)
@@ -11,9 +10,6 @@ function initMap() {
     return response.json();
   })
   .then((data) => {
-    
-    console.log(data);
-    console.log(data.results[0].geometry.location);
     data.results[0].geometry.location;
     const animalCoords = {
         lat: data.results[0].geometry.location.lat,
@@ -24,7 +20,6 @@ function initMap() {
     center: animalCoords,
     zoom: 12,
   });
-  
 
   const animalMarker = new google.maps.Marker({
     position: animalCoords,
@@ -44,6 +39,7 @@ function initMap() {
 });
 }
 
+// Initializing Map on organization_details page
 function initOrgMap() {
 
   fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${zipcode}&key=${googleGeoKey}`)
@@ -51,9 +47,6 @@ function initOrgMap() {
     return response.json();
   })
   .then((data) => {
-    
-    console.log(data);
-    console.log(data.results[0].geometry.location);
     data.results[0].geometry.location;
     const organizationCoords = {
         lat: data.results[0].geometry.location.lat,
@@ -65,7 +58,6 @@ function initOrgMap() {
     zoom: 12,
   });
   
-
   const organizationMarker = new google.maps.Marker({
     position: organizationCoords,
     title: 'organization',
