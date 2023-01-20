@@ -2,7 +2,13 @@
 
 {% block title %}View Organization{% endblock %}
 
-{% block body %}
+{% block head %}
+<style></style>
+{% endblock %}
+
+{% block body %} 
+
+
 <h1>Organizations Nearby</h1>
 
 
@@ -16,13 +22,16 @@
 <p>Go to {{ organization['name'] }}'s <a href="{{ organization['website'] }}">website</a>.</p>
 {% endif %}
 <p id="city">{{ organization['address']['city'] }}, {{ organization['address']['state'] }}, {{ organization['address']['postcode'] }}</p>
+
+<!-- Google Geocoding API Key -->
+<script> let googleGeoKey = "{{ google_geo_key }}"</script>
 <p id="zipcode" data-zipcode="{{ organization['address']['postcode'] }}"></p>
 
-<!-- <script>console.log(address)</script> -->
 <p><a href="mailto:{{ organization['email'] }}?subject=Inquiry from HappyPaws user&body=Hi, I am interested in your adopting policy. Could you please send me the application form and details on the application process? ">{{ organization['email'] }}</a></p><br>
 {% if organization.get('phone') %}
 <p><a href="tel:{{ organization['phone'] }}">Phone: {{ organization['phone'] }}</a></p><br>
 {% endif %}
+
 <p id="org-id" data-org-id="{{ organization['id'] }}"></p>
 
 
@@ -30,13 +39,16 @@
 <div id="map" style="height: 350px; width: 350px;"></div>
 <script src="/static/js/map.js"></script>
 
-<h3>Animals available for adoption at {{ organization['name'] }}</h3>
-<ul>
+
+<div id="available-animals-at-organization">
+  <h3>Animals available for adoption at {{ organization['name'] }}</h3>
+  <div class="row row-cols-md-3 g-5">
     {% for animal in animals %}
-      
-      <li><a href="/{{ animal['type']|lower }}/{{ animal['organization_id'] }}/{{ animal['id']}}">
+    <div class="col">
+      <a href="/{{ animal['type']|lower }}/{{ animal['organization_id'] }}/{{ animal['id']}}">
+      <div class="card h-100">
         {% if animal['photos']|length > 0 %}
-        <img src="{{ animal['photos'][0]['full'] }}"><br>
+        <img src="{{ animal['photos'][0]['full'] }}" class="card-img-top" alt="animal">
         {% else %}
           {% if animal['type'] == 'Dog' %}
           <img src="https://media.istockphoto.com/id/942318196/vector/dog-puppy-smiling-funny-animals-coloring-pages-cartoon-vector-illustration.jpg?s=612x612&w=0&k=20&c=VmV1zfZ56Kulm6nbf3wzeZfef3DwIHpT22lt4dK52nA="><br>
@@ -47,15 +59,19 @@
           {% elif animal['type'] == 'Bird' %}
           <img src="https://i.etsystatic.com/33889596/r/il/1e530a/3744462889/il_1588xN.3744462889_4k4v.jpg"><br>
           {% endif %}
-        {% endif %}
-        {{ animal['name']|safe|title }}</a><br>
-        {{ animal['breeds']['primary'] }}</li>
+        {% endif %}</a>
+        <div class="card-body">
+          <h5 class="card-title">{{ animal['name']|safe|title }}</h5>
+          <p class="card-text">{{ animal['breeds']['primary'] }}</p>
+        </div>
+      </div>
+  </div>
     {% endfor %}
-  </ul>
+</div>
+
 
 <!-- Google Maps -->
 <script async src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initOrgMap"></script>
 <script></script>
-
 
 {% endblock %}

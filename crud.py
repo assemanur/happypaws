@@ -106,11 +106,6 @@ def create_favorite(user, animal_id, name, type, image, org_id):
     favorite = Favorite().query.filter_by(user_id=user, animal_id=animal_id).first()
     if not favorite:
         favorite = Favorite(user_id=user, animal_id=animal_id, animal_name=name, animal_type=type, image=image, org_id=org_id)
-        # favorite.user_id = user
-        # favorite.animal_id = animal_id
-        # favorite.animal_name = name
-        # favorite.animal_type = type
-        # favorite.image = image
     db.session.add(favorite)
     db.session.commit()
     return favorite

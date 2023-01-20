@@ -24,7 +24,7 @@
   }
 
   body {
-    background: url("/static/img/pets_background.jpg") no-repeat center center;
+    background-color: #CCBDCC;
     background-size: cover;
     background-position: relative;
     margin-top: 100px;
