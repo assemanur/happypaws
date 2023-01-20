@@ -96,6 +96,7 @@ def show_dog_details(org_id, animal_id):
         name = animal.get('name')
         org_id = animal.get('organization_id')
         type = (animal.get('type')).lower()
+        breed = animal['breeds']['primary']
         if animal.get('primary_photo_cropped'):
             photos = animal.get('primary_photo_cropped')
             image = photos.get('small')
@@ -108,7 +109,7 @@ def show_dog_details(org_id, animal_id):
                 image = "https://i.etsystatic.com/21185388/r/il/dc90fa/2226677215/il_1588xN.2226677215_6bov.jpg"
             elif animal.get('type') == "Bird":
                 image = "https://i.etsystatic.com/33889596/r/il/1e530a/3744462889/il_1588xN.3744462889_4k4v.jpg"
-        viewed_animal = crud.create_viewed_animal(user_id, animal_id, name, type, image, org_id)
+        viewed_animal = crud.create_viewed_animal(user_id, animal_id, name, type, breed, image, org_id)
         recently_viewed = crud.get_viewed_by_user_id(user_id)
         print(f"\033[35m█▓▒░ | {name} has been added to viewed_animals table \033[0m")
 
@@ -135,6 +136,7 @@ def show_cat_details(org_id, animal_id):
         name = animal.get('name')
         org_id = animal.get('organization_id')
         type = (animal.get('type')).lower()
+        breed = animal['breeds']['primary']
         if animal.get('primary_photo_cropped'):
             photos = animal.get('primary_photo_cropped')
             image = photos.get('small')
@@ -147,7 +149,7 @@ def show_cat_details(org_id, animal_id):
                 image = "https://i.etsystatic.com/21185388/r/il/dc90fa/2226677215/il_1588xN.2226677215_6bov.jpg"
             elif animal.get('type') == "Bird":
                 image = "https://i.etsystatic.com/33889596/r/il/1e530a/3744462889/il_1588xN.3744462889_4k4v.jpg"
-        viewed_animal = crud.create_viewed_animal(user_id, animal_id, name, type, image, org_id)
+        viewed_animal = crud.create_viewed_animal(user_id, animal_id, name, type, breed, image, org_id)
         recently_viewed = crud.get_viewed_by_user_id(user_id)
         print(f"\033[35m█▓▒░ | {name} has been added to viewed_animals table \033[0m")
 
@@ -174,6 +176,7 @@ def show_rabbit_details(org_id, animal_id):
         name = animal.get('name')
         org_id = animal.get('organization_id')
         type = (animal.get('type')).lower()
+        breed = animal['breeds']['primary']
         if animal.get('primary_photo_cropped'):
             photos = animal.get('primary_photo_cropped')
             image = photos.get('small')
@@ -186,7 +189,7 @@ def show_rabbit_details(org_id, animal_id):
                 image = "https://i.etsystatic.com/21185388/r/il/dc90fa/2226677215/il_1588xN.2226677215_6bov.jpg"
             elif animal.get('type') == "Bird":
                 image = "https://i.etsystatic.com/33889596/r/il/1e530a/3744462889/il_1588xN.3744462889_4k4v.jpg"
-        viewed_animal = crud.create_viewed_animal(user_id, animal_id, name, type, image, org_id)
+        viewed_animal = crud.create_viewed_animal(user_id, animal_id, name, type, breed, image, org_id)
         recently_viewed = crud.get_viewed_by_user_id(user_id)
         print(f"\033[35m█▓▒░ | {name} has been added to viewed_animals table \033[0m")
 
@@ -213,6 +216,7 @@ def show_bird_details(org_id, animal_id):
         name = animal.get('name')
         org_id = animal.get('organization_id')
         type = (animal.get('type')).lower()
+        breed = animal['breeds']['primary']
         if animal.get('primary_photo_cropped'):
             photos = animal.get('primary_photo_cropped')
             image = photos.get('small')
@@ -225,7 +229,7 @@ def show_bird_details(org_id, animal_id):
                 image = "https://i.etsystatic.com/21185388/r/il/dc90fa/2226677215/il_1588xN.2226677215_6bov.jpg"
             elif animal.get('type') == "Bird":
                 image = "https://i.etsystatic.com/33889596/r/il/1e530a/3744462889/il_1588xN.3744462889_4k4v.jpg"
-        viewed_animal = crud.create_viewed_animal(user_id, animal_id, name, type, image, org_id)
+        viewed_animal = crud.create_viewed_animal(user_id, animal_id, name, type, breed, image, org_id)
         recently_viewed = crud.get_viewed_by_user_id(user_id)
         print(f"\033[35m█▓▒░ | {name} has been added to viewed_animals table \033[0m")
 

@@ -106,6 +106,7 @@ class ViewedAnimal(db.Model):
     animal_id = db.Column(db.Integer, db.ForeignKey("animals.animal_id"))
     animal_name = db.Column(db.String)
     animal_type = db.Column(db.String(10))
+    breed = db.Column(db.String)
     image = db.Column(db.String(200), nullable=True)
     org_id = db.Column(db.String)
 

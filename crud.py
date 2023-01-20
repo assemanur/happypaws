@@ -55,25 +55,26 @@ def update_zipcode(email, zipcode):
 def update_user_data(email, first_name, last_name, phone, address, city, state, zipcode):
 
     user = User.query.filter(User.email == email).first()
-    if first_name is not None:
+
+    if first_name is not None and first_name is not "":
         user.first_name = first_name
         
-    if last_name is not None:
+    if last_name is not None and last_name is not "":
         user.last_name = last_name
         
-    if phone is not None:
+    if phone is not None and phone is not "":
         user.phone = phone
         
-    if address is not None:
+    if address is not None and address is not "":
         user.address = address
         
-    if city is not None:
+    if city is not None and city is not "":
         user.city = city
         
-    if state is not None:
+    if state is not None and state is not "":
         user.state = state
         
-    if zipcode is not None:
+    if zipcode is not None and zipcode is not "":
         user.zipcode = zipcode
         
 
@@ -390,7 +391,7 @@ def get_breeds_by_animal_type(animal_type):
     return result
 
 
-def create_viewed_animal(user_id, animal_id, name, type, image, org_id):
+def create_viewed_animal(user_id, animal_id, name, type, breed, image, org_id):
     """Track each viewed animal by particular user and add it to the database."""
 
     animal_id = int(animal_id)
@@ -400,7 +401,7 @@ def create_viewed_animal(user_id, animal_id, name, type, image, org_id):
         db.session.add(animal)
     viewed_animal = ViewedAnimal().query.filter_by(user_id=user_id, animal_id=animal_id).first()
     if not viewed_animal:
-        viewed_animal = ViewedAnimal(user_id=user_id, animal_id=animal_id, animal_name=name, animal_type=type, image=image, org_id=org_id)
+        viewed_animal = ViewedAnimal(user_id=user_id, animal_id=animal_id, animal_name=name, animal_type=type, breed=breed, image=image, org_id=org_id)
         db.session.add(viewed_animal)
     db.session.commit()
 
