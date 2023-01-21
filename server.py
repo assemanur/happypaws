@@ -261,6 +261,8 @@ def show_organization_details(org_id):
 
     organization = crud.get_organization(org_id)
     animals = crud.get_animals_by_organization(org_id)
+    for animal in animals:
+        print(animal['name'])
 
     return render_template('organization_details.html', organization=organization, animals=animals, google_maps_api_key=GOOGLE_MAPS_KEY, google_geo_key=GOOGLE_GEOCODING_KEY)
 

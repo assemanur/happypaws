@@ -46,7 +46,7 @@
     {% for animal in animals %}
     <div class="col">
       <a href="/{{ animal['type']|lower }}/{{ animal['organization_id'] }}/{{ animal['id']}}">
-      <div class="card h-100">
+      <div class="card h-90">
         {% if animal['photos']|length > 0 %}
         <img src="{{ animal['photos'][0]['full'] }}" class="card-img-top" alt="animal">
         {% else %}

@@ -5,7 +5,7 @@
 {% block body %}
 
 
-  <h1>Pets for Adoption</h1>
+  <!-- <h1>Pets for Adoption</h1>
   {% if animals|length > 0 %}
   <ul>
     {% for animal in animals %}
@@ -31,8 +31,67 @@
   </ul>
   {% else %}
   <p>No results found</p>
-  {% endif %}
+  {% endif %} -->
 
+
+<div id="animals for adoption">
+  {% if animals|length > 0 %}
+  <h1>Pets for Adoption</h1>
+  <div class="row row-cols-md-3 g-5">
+    {% for animal in animals %}
+    <div class="col">
+      {% if animal['photos']|length > 0 %}
+      <a href="/{{ animal['type']|lower }}/{{ animal['organization_id'] }}/{{ animal['id']}}">
+      <div class="card h-100">
+      <img src="{{ animal['photos'][0]['full'] }}">
+      <div class="card-body">
+        <h5 class="card-title">{{ animal['name']|safe|title }}</h5>
+        <p class="card-text">{{ animal['breeds']['primary'] }}{% if animal['breeds']['secondary'] %} , {{ animal['breeds']['secondary'] }}{% endif %}</p>
+      </div>
+      </div></a><br>
+      {% else %}
+        {% if animal['type'] == 'Dog' %}
+        <a href="/{{ animal['type']|lower }}/{{ animal['organization_id'] }}/{{ animal['id']}}">
+        <div class="card h-100">
+        <img src="https://media.istockphoto.com/id/942318196/vector/dog-puppy-smiling-funny-animals-coloring-pages-cartoon-vector-illustration.jpg?s=612x612&w=0&k=20&c=VmV1zfZ56Kulm6nbf3wzeZfef3DwIHpT22lt4dK52nA=">
+        <div class="card-body">
+          <h5 class="card-title">{{ animal['name']|safe|title }}</h5>
+          <p class="card-text">{{ animal['breeds']['primary'] }}{% if animal['breeds']['secondary'] %} , {{ animal['breeds']['secondary'] }}{% endif %}</p>
+        </div>
+      </div></a><br>
+        {% elif animal['type'] == 'Cat' %}
+        <a href="/{{ animal['type']|lower }}/{{ animal['organization_id'] }}/{{ animal['id']}}">
+        <div class="card h-100">
+        <img src="https://i.etsystatic.com/7867651/r/il/929251/1234114682/il_1588xN.1234114682_1t12.jpg">
+        <div class="card-body">
+          <h5 class="card-title">{{ animal['name']|safe|title }}</h5>
+          <p class="card-text">{{ animal['breeds']['primary'] }}{% if animal['breeds']['secondary'] %} , {{ animal['breeds']['secondary'] }}{% endif %}</p>
+        </div>
+      </div></a><br>
+        {% elif animal['type'] == 'Rabbit' %}
+        <a href="/{{ animal['type']|lower }}/{{ animal['organization_id'] }}/{{ animal['id']}}">
+        <img src="https://i.etsystatic.com/21185388/r/il/dc90fa/2226677215/il_1588xN.2226677215_6bov.jpg">
+        <div class="card-body">
+          <h5 class="card-title">{{ animal['name']|safe|title }}</h5>
+          <p class="card-text">{{ animal['breeds']['primary'] }}{% if animal['breeds']['secondary'] %} , {{ animal['breeds']['secondary'] }}{% endif %}</p>
+        </div>
+      </div></a><br>
+        {% elif animal['type'] == 'Bird' %}
+        <a href="/{{ animal['type']|lower }}/{{ animal['organization_id'] }}/{{ animal['id']}}">
+        <div class="card h-100">
+        <img src="https://i.etsystatic.com/33889596/r/il/1e530a/3744462889/il_1588xN.3744462889_4k4v.jpg">
+        <div class="card-body">
+          <h5 class="card-title">{{ animal['name']|safe|title }}</h5>
+          <p class="card-text">{{ animal['breeds']['primary'] }}{% if animal['breeds']['secondary'] %} , {{ animal['breeds']['secondary'] }}{% endif %}</p>
+        </div>
+       </div></a><br>
+        {% endif %}
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
 
 
 {% endblock %}
