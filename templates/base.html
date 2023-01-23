@@ -28,7 +28,7 @@
     
     <div class="container">
     {% for category, msg in get_flashed_messages(with_categories=True) %}
-      <div class="flash-msg-{{category}}">{{ msg }}</div>
+      <div class="alert alert-{{category}}" role="alert">{{ msg }}</div>
     {% endfor %}
 
     <!-- Nav Bar -->

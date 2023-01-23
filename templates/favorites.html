@@ -26,7 +26,7 @@
                     <img src="{{ favorite['image'] }}" class="card-img-top" alt="animal"></a>
                 {% endif %}
                     <div class="card-body">
-                        <h5 class="card-title">{{ favorite['animal_name'] }}</h5>
+                        <h5 class="card-title">{{ favorite['animal_name']|title }}</h5>
                         <a href="/unfavorite/{{favorite['animal_id']}}" class="btn btn-outline-secondary btn-sm" id="unfavorite-button">Unfavorite</a>
                     </div>
                 </div>

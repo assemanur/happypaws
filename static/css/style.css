@@ -41,24 +41,13 @@
   } */
 
 /**** Flash Messages Style ****/
-  .flash-msg {
-    padding: 12px;
-    border-radius: 3px;
-    font-size: 1.2rem;
-    margin-bottom: 16px;
-  }
+.alert-success {
+  background-color: #88a763;
+}
 
-  .flash-msg-info {
-    border: 2px solid rgb(104, 79, 188);
-    background-color: rgb(37, 180, 35);
-    color: white;
-  }
-
-  .flash-msg-warning {
-    border: 2px solid rgb(255, 255, 0);
-    background-color: rgb(180, 40, 35);
-    color: white;
-  }
+/* .alert .alert-warning {
+  color: #bebb50
+} */
 
 /**** Nav Bar Style ****/
 .navbar {
@@ -85,6 +74,7 @@
 }
 
 /* change the color of active or hovered links */
+.navbar-brand:hover, .navbar-brand.active,
 .navbar-custom .nav-item.active .nav-link,
 .navbar-custom .nav-item:hover .nav-link {
   color: #faf3f5;

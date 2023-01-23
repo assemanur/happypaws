@@ -295,7 +295,7 @@ def favorite_animal(animal_id):
             elif animal.get('type') == "Bird":
                 image = "https://i.etsystatic.com/33889596/r/il/1e530a/3744462889/il_1588xN.3744462889_4k4v.jpg"
         favorite = crud.create_favorite(user_id, animal_id, name, type, image, org_id)
-        flash(f"{name} has been added to favorites list.", 'info')
+        flash(f"{name} has been added to favorites list.", 'success')
         print(f"\033[36m█▓▒░ | Favorite has been added to database \033[0m")
     
     return redirect(request.referrer)
@@ -315,7 +315,7 @@ def unfavorite_animal(animal_id):
         animal = crud.get_animal_by_id(animal_id)
         animal_id = animal.get('id')
         crud.delete_favorite(user_id=user_id, animal_id=animal_id)
-        flash(f"You have removed {animal.get('name')} from your favorites list.", 'info')
+        flash(f"{animal.get('name')} has been removed from your favorites list.", 'success')
         print(f"\033[35m█▓▒░ | Favorite has been removed from db \033[0m")
     
     return redirect('/favorites')
@@ -352,7 +352,7 @@ def register_user():
         user = crud.create_user(first_name=first_name, last_name=last_name, email=email, password_hash=password, phone=None, address=None, city=None, state=None, zipcode=None)
         db.session.add(user)
         db.session.commit()
-        flash("New account has been created. Please log in using your credentials.", 'info')
+        flash("New account has been created. Please log in using your credentials.", 'success')
         
     return redirect('/')
 
@@ -370,10 +370,10 @@ def handle_login():
     if not user:
         flash("Account with this email doesn't exist. Please try again.", 'warning')
     elif user.password_hash != password:
-        flash("Password you have entered is incorrect.Please try again.", 'warning')
+        flash("Password you have entered is incorrect. Please try again.", 'warning')
     else:
         session["user_email"] = user.email
-        flash(f"Welcome back, {user.first_name}!", 'info')
+        flash(f"Welcome back, {user.first_name}!", 'success')
 
     return redirect('/')
 
@@ -384,7 +384,7 @@ def handle_logout():
 
     del session["user_email"]
     del session["zipcode"]
-    flash("You have logged out successfully!", 'info')
+    flash("You have logged out successfully!", 'success')
     return redirect('/')
 
 
@@ -410,11 +410,11 @@ def update_user_zipcode():
     zipcode = request.form.get('zipcode')
     email = session.get('user_email', None)
     if not email:
-        flash("Please login!", 'warning')
+        flash("Please log in or create an account!", 'warning')
 
     user = crud.update_zipcode(email, zipcode)
     db.session.commit()
-    flash("Zipcode has been updated.", 'info')
+    flash("Zipcode has been updated.", 'success')
         
     return redirect(f'/user')
 
@@ -432,13 +432,13 @@ def update_user_profile():
     zipcode = request.form.get('zip', None)
     email = session.get('user_email', None)
     if not email:
-        flash("Please login!", 'warning')
+        flash("Please log in or create an account!", 'warning')
         return redirect("/")
     
     user = crud.update_user_data(email, first_name, last_name, phone, address, city, state, zipcode)
     db.session.commit()
     
-    flash("Your profile has been updated.", 'info')
+    flash("Your profile has been updated.", 'success')
 
     return redirect(f'/user')
     
