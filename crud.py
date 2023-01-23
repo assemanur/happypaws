@@ -252,12 +252,12 @@ def get_organization(org_id):
 
 
 def get_animals_by_organization(org_id):
-    """Get 9 animals available for adoption at specified shelter."""
+    """Get 12 animals available for adoption at specified shelter."""
 
     headers = {
     'Authorization': 'Bearer ' + local.token,
     }
-    res = requests.get(f'https://api.petfinder.com/v2/animals?organizations={org_id}&limit=9', headers=headers)
+    res = requests.get(f'https://api.petfinder.com/v2/animals?organization={org_id}&limit=12', headers=headers)
 
     # If response came back with Error 401 due to expired token, renewing the token via POST request and sending the GET request again
     if res.status_code == 401:
@@ -265,7 +265,7 @@ def get_animals_by_organization(org_id):
         headers = {
             'Authorization': 'Bearer ' + local.token,
             }
-        res = requests.get(f'https://api.petfinder.com/v2/animals?organizations={org_id}&limit=9', headers=headers)
+        res = requests.get(f'https://api.petfinder.com/v2/animals?organization={org_id}&limit=12', headers=headers)
 
     res = res.json()
     response = res['animals']
@@ -404,9 +404,9 @@ def create_viewed_animal(user_id, animal_id, name, type, breed, image, org_id):
 
 
 def get_viewed_by_user_id(user_id):
-    """Show last 6 animals user has viewed."""
+    """Show last 8 animals user has viewed."""
 
-    return ViewedAnimal.query.filter(ViewedAnimal.user_id == user_id)[-7:-1:]
+    return ViewedAnimal.query.filter(ViewedAnimal.user_id == user_id)[-9:-1:]
 
 if __name__ == '__main__':
     from server import app

@@ -3,7 +3,48 @@
 
 {% block body %}
 
-{% if favorites != []  %}
+
+<div>
+    <h3>Your favorites</h3>
+    {% if favorites != []  %}
+    <div class="row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-xs-1 g-5">
+        {% for favorite in favorites %}
+        <div class="col">
+            {% if favorite['image'] %}
+            <div class="card h-90">
+                {% if favorite['animal_type'] == 'dog' %}
+                <a href="/dog/{{ favorite['org_id'] }}/{{ favorite['animal_id'] }}">
+                    <img src="{{ favorite['image'] }}" class="card-img-top" alt="animal"></a>
+                {% elif favorite['animal_type'] == 'cat' %}
+                <a href="/cat/{{ favorite['org_id'] }}/{{ favorite['animal_id'] }}">
+                    <img src="{{ favorite['image'] }}" class="card-img-top" alt="animal"></a>
+                {% elif favorite['animal_type'] == 'rabbit' %}
+                <a href="/rabbit/{{ favorite['org_id'] }}/{{ favorite['animal_id'] }}">
+                    <img src="{{ favorite['image'] }}" class="card-img-top" alt="animal"></a>
+                {% elif favorite['animal_type'] == 'bird' %}
+                <a href="/bird/{{ favorite['org_id'] }}/{{ favorite['animal_id'] }}">
+                    <img src="{{ favorite['image'] }}" class="card-img-top" alt="animal"></a>
+                {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ favorite['animal_name'] }}</h5>
+                        <a href="/unfavorite/{{favorite['animal_id']}}" class="btn btn-outline-secondary btn-sm" id="unfavorite-button">Unfavorite</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+        </div>
+    {% else %} 
+    <h5>Your list is empty.</h5>
+    <a href="/animals/dog">Dogs</a>
+    <a href="/animals/cat">Cats</a>
+    <a href="/animals/rabbit">Rabbits</a>
+    <a href="/animals/bird">Birds</a>
+{% endif %}   
+</div>
+
+
+<!-- {% if favorites != []  %}
     {% for favorite in favorites %}
     <ul>
         <li>
@@ -25,9 +66,9 @@
                     {{ favorite['animal_name'] }}<br>
                     <img src="{{ favorite['image'] }}"><br></a>
                 {% endif %}
-            {% endif %}
+            {% endif %} -->
             <!-- Button to unfavorite the animal -->
-            <a href="/unfavorite/{{favorite['animal_id']}}" class="btn btn-primary">Unfavorite</a><br><br>
+            <!-- <a href="/unfavorite/{{favorite['animal_id']}}" class="btn btn-primary">Unfavorite</a><br><br>
         </li>
     </ul>
     {% endfor %}
@@ -38,6 +79,6 @@
     <a href="/animals/cat">Cats</a>
     <a href="/animals/rabbit">Rabbits</a>
     <a href="/animals/bird">Birds</a>
-{% endif %}
+{% endif %} -->
 
 {% endblock %}

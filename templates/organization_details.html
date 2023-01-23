@@ -42,7 +42,7 @@
 
 <div id="available-animals-at-organization">
   <h3>Animals available for adoption at {{ organization['name'] }}</h3>
-  <div class="row row-cols-md-3 g-5">
+  <div class="row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-xs-1 g-5">
     {% for animal in animals %}
     <div class="col">
       <a href="/{{ animal['type']|lower }}/{{ animal['organization_id'] }}/{{ animal['id']}}">

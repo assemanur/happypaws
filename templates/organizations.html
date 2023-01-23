@@ -2,24 +2,33 @@
 {% block title %}View Organizations{% endblock %}
 
 {% block body %}
-
+<div id="organizations nearby">
   <h1>Organizations Nearby:</h1>
   {% if organizations|length > 0 %}
-  <ul>
+  <div class="row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-xs-1 g-5">
     {% for organization in organizations %}
-      
-      <li><a href="/view/organizations/{{ organization['id'] }}">
-        {% if organization['photos']|length > 0 %}
-        <img src="{{ organization['photos'][0]['full'] }}"><br>
-        {% else %}
-          <img src="/static/img/organization.jpg"><br>
-        {% endif %}
-        {{ organization['name'] }}</a><br>
-        {{ organization['address']['city'] }}</li>
-    {% endfor %}
-  </ul>
+    <div class="col">
+      <div class="card h-100">
+      {% if organization['photos']|length > 0 %}
+      <a href="/view/organizations/{{ organization['id'] }}">
+        <img src="{{ organization['photos'][0]['full'] }}" class="card-img-top" alt="organization logo"></a>
+      {% else %}
+      <a href="/view/organizations/{{ organization['id'] }}">
+        <img src="/static/img/organization.jpg" class="card-img-top" alt="organization logo"></a>
+      {% endif %}
+      <div class="card-body">
+        <h5 class="card-title">{{ organization['name'] }}</h5>
+      </div>
+      <div class="card-footer">
+        {{ organization['address']['city'] }}, {{ organization['address']['state'] }}
+      </div>
+      </div>
+  </div>
+  {% endfor %}
+</div>
   {% else %}
   <p>No nearby organizations found.</p>
   {% endif %}
+</div>
 
 {% endblock %}

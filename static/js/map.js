@@ -41,12 +41,14 @@ function initMap() {
 
 // Initializing Map on organization_details page
 function initOrgMap() {
-
+  console.log(zipcode);
   fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${zipcode}&key=${googleGeoKey}`)
   .then((response) => {
+    console.log(response);
     return response.json();
   })
   .then((data) => {
+    console.log(data);
     data.results[0].geometry.location;
     const organizationCoords = {
         lat: data.results[0].geometry.location.lat,

@@ -26,57 +26,111 @@
     }
   }
 </script>
+
+<style>
+
+</style>
 {% endblock %}
 
 {% block body %}
 
-
-
-<div id="page" class="container">
-  <h1>This is a homepage</h1>
-
-  
-  
-  <div id="search-by-breed">
-  <form id="animal-search" action="/" method="post">
-
-    <label for="animal_type" id="animal_type">Animal type:</label><br>
-    <select class="get_animal_type" id="type" name="type" onchange="populate('type', 'breed')">
-      <option value="">Choose animal type</option>
-      <option value="dog">Dog</option>
-      <option value="cat">Cat</option>
-      <option value="rabbit">Rabbit</option>
-      <option value="bird">Bird</option>
-    </select><br>
-
-    <label for="breed">Breed:</label><br>
-    <select class="get_animal_breed" id="breed" name="breed">
-      <option value="">Choose breed</option>
-    </select><br>
-
-    <label for="location">Zipcode:</label><br>
-    <input type="text" pattern="[0-9]{5}" id="location" name="location" placeholder="Enter 5-digit zipcode"><br>
-    <input type="submit" value="Search"><br>
-  </form>
+<!-- Jumbotron -->
+<div class="p-5 text-center bg-image rounded-3" style="
+    background-image: url('/static/img/jumbotron.jpg');
+    background-size: cover;
+    height: 450px;
+    padding: 200px;">
+  <div class="mask" style="
+  background-color: #A6BB8D; 
+  opacity: 0.7; 
+  border-radius: 10px; 
+  padding: 40px; 
+  margin-top: 100px;">
+    <div class="d-flex justify-content-center align-items-center h-100">
+      <div class="text-white">
+        <!-- <h1 class="mb-3">Heading</h1> -->
+          <form id="animal-search" action="/" method="post">
+            <div class="row g-1">
+              <div class="col-4">
+                <label for="animal_type" id="animal_type">Animal type:</label>
+                <select class="form-control" id="type" name="type" onchange="populate('type', 'breed')">
+                  <option value="">Choose animal type</option>
+                  <option value="dog">Dog</option>
+                  <option value="cat">Cat</option>
+                  <option value="rabbit">Rabbit</option>
+                  <option value="bird">Bird</option>
+                </select>
+                </div>
+              <div class="col-6">
+                <label for="breed">Breed:</label>
+                <select class="form-control" id="breed" name="breed">
+                  <option value="">Choose breed</option>
+                </select>
+              </div>
+              <div class="col">
+                <label for="location">Zipcode:</label>
+                <input class="form-control" type="text" pattern="[0-9]{5}" id="location" name="location" placeholder="Enter 5-digit zipcode">
+              </div>
+              <div>
+                <input type="submit" class="btn btn-outline-light btn-lg" role="button" value="Search">
+              </div>
+              </div>
+          </form>
+      </div>
+    </div>
   </div>
+</div>
+<!-- Jumbotron -->
 
-  
 
+<div class="search-by-animal-type" style="
+height: auto;
+padding: 20px;">  
   <div class="row">
     <div class="col">
-      <a href="/animals/dog"><img src="/static/img/dog.jpg" class="category" height="200px"><br>Search dogs</a><br>
+      <div class="card">
+        <a href="/animals/dog">
+          <img src="/static/img/dog.jpg" class="category"></a>      
+          <div class="card-body">
+            <h5 class="card-title">Search dogs</h5>
+          </div>
+      </div>
     </div>
     <div class="col">
-      <a href="/animals/cat"><img src="/static/img/cat.jpg" class="category" height="200px"><br>Search cats</a><br>
+      <div class="card">
+        <a href="/animals/cat">
+          <img src="/static/img/cat.jpg" class="category"></a>      
+          <div class="card-body">
+            <h5 class="card-title">Search cats</h5>
+          </div>
+      </div>
     </div>
     <div class="col">
-      <a href="/animals/rabbit"><img src="/static/img/rabbit.jpg" class="category" height="200px"><br>Search rabbits</a><br>
+      <div class="card">
+        <a href="/animals/rabbit">
+          <img src="/static/img/rabbit.jpg" class="category"></a>      
+          <div class="card-body">
+            <h5 class="card-title">Search rabbits</h5>
+          </div>
+      </div>
     </div>
     <div class="col">
-      <a href="/animals/bird"><img src="/static/img/bird.jpg" class="category" height="200px"><br>Search birds</a><br>
+      <div class="card">
+        <a href="/animals/bird">
+          <img src="/static/img/bird.jpg" class="category"></a>      
+          <div class="card-body">
+            <h5 class="card-title">Search birds</h5>
+          </div>
+      </div>
     </div>
     <div class="col">
-      <a href="/view/organizations"><img src="/static/img/organization_main.jpg" class="category" height="200px"><br>Search organizations</a><br>
+      <div class="card">
+        <a href="/view/organizations">
+          <img src="/static/img/organization_main.jpg" class="category"></a>      
+          <div class="card-body">
+            <h5 class="card-title">Search organizations</h5>
+          </div>
+      </div>
     </div>
   </div>
 </div>
@@ -86,47 +140,47 @@
 <div id="recently-viewed">
 {% if recently_viewed_animals != []  %}
 <h3>Recently viewed animals</h3>
-<div class="row row-cols-md-3 g-5">{% for recent_animal in recently_viewed_animals %}
+<div class="row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-xs-1 g-5">{% for recent_animal in recently_viewed_animals %}
   <div class="col">{% if recent_animal['animal_type'] == 'dog' %}
     <a href="/dog/{{ recent_animal['org_id'] }}/{{ recent_animal['animal_id'] }}">
     <div class="card h-100">{% if recent_animal['image'] %}
-      <img src="{{ recent_animal['image'] }}" class="card-img-top" alt="animal">
+      <img src="{{ recent_animal['image'] }}" class="card-img-top" alt="animal"></a>
       <div class="card-body">
         <h5 class="card-title">{{ recent_animal['animal_name']|safe|title }}</h5>
         <p class="card-text">{{ recent_animal['breed'] }}</p>
       </div>
       {% endif %}
-    </div></a>
+    </div>
     {% elif recent_animal['animal_type'] == 'cat' %}
           <a href="/cat/{{ recent_animal['org_id'] }}/{{ recent_animal['animal_id'] }}">
             <div class="card h-100">{% if recent_animal['image'] %}
-              <img src="{{ recent_animal['image'] }}" class="card-img-top" alt="animal">
+              <img src="{{ recent_animal['image'] }}" class="card-img-top" alt="animal"></a>
               <div class="card-body">
                 <h5 class="card-title">{{ recent_animal['animal_name']|safe|title }}</h5>
                 <p class="card-text">{{ recent_animal['breed'] }}</p>
               </div>
               {% endif %}
-            </div></a>
+            </div>
     {% elif recent_animal['animal_type'] == 'rabbit' %}
           <a href="/rabbit/{{ recent_animal['org_id'] }}/{{ recent_animal['animal_id'] }}">
             <div class="card h-100">{% if recent_animal['image'] %}
-              <img src="{{ recent_animal['image'] }}" class="card-img-top" alt="animal">
+              <img src="{{ recent_animal['image'] }}" class="card-img-top" alt="animal"></a>
               <div class="card-body">
                 <h5 class="card-title">{{ recent_animal['animal_name']|safe|title }}</h5>
                 <p class="card-text">{{ recent_animal['breed'] }}</p>
               </div>
               {% endif %}
-            </div></a>
+            </div>
     {% elif recent_animal['animal_type'] == 'bird' %}
           <a href="/bird/{{ recent_animal['org_id'] }}/{{ recent_animal['animal_id'] }}">
             <div class="card h-100">{% if recent_animal['image'] %}
-              <img src="{{ recent_animal['image'] }}" class="card-img-top" alt="animal">
+              <img src="{{ recent_animal['image'] }}" class="card-img-top" alt="animal"></a>
               <div class="card-body">
                 <h5 class="card-title">{{ recent_animal['animal_name']|safe|title }}</h5>
                 <p class="card-text">{{ recent_animal['breed'] }}</p>
               </div>
               {% endif %}
-            </div></a>
+            </div>
   {% endif %}
 </div>
 {% endfor %}</div>

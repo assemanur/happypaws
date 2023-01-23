@@ -20,7 +20,9 @@
   }
 
   .category {
-    height: 200px
+    height: 200px;
+    border-radius: 10px;
+    margin: 10px;
   }
 
   body {
@@ -61,6 +63,7 @@
 /**** Nav Bar Style ****/
 .navbar {
   padding: 0px;
+  
 }
 
 .navbar .navbar-main {
@@ -73,7 +76,7 @@
 /* change the brand and text color */
 .navbar-custom .navbar-brand,
 .navbar-custom .navbar-text {
-  color: #c55e6e;
+  color: #A41165;
 }
 
 /* change the link color */
@@ -104,19 +107,16 @@
 
 /**** Modal Forms Style ****/
 
-/* body { */
-	/* display: flex; */
-	/* justify-content: center; */
-	/* align-items: center; */
-	/* height: 100vh; */
-  /* background-color: thistle; */
-/* } */
-.modal-body {
-  padding: 0;
-}
+/* body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+  background-color: thistle;
+ } */
 
 .modal-content{
-  background-color: #A6BB8D;
+  background: #CCBDCC;
 }
 
 .btn-close {
@@ -133,6 +133,7 @@
 .form-area {
 	padding: 3em;
 	max-width: 100%;
+  background: #A6BB8D;
 	color: #fff;
 	box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.5);
 }
@@ -211,3 +212,33 @@
   } */
 
 
+/**** Cards Style  ****/
+.card-title, .card-text, .card-footer {
+  text-align: center;
+}
+
+.search-by-animal-type .card {
+  background: #CCBDCC;
+  border: #CCBDCC;
+}
+
+.card-title {
+  color: #A41165;
+}
+
+.card-text {
+  color: #816a81;
+}
+
+.card-footer {
+  color: #6a4c6a
+}
+
+#unfavorite-button {
+  color: #CCBDCC;
+  background-color: #A41165;
+}
+
+.card-body {
+  text-align: center;
+}
