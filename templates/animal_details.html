@@ -3,25 +3,23 @@
 {% block title %}{{context['title']}}{% endblock %}
 
 {% block body %}
-<h1>{{ context['header'] }}</h1>
 
 <div class="row">
   <div class="col-9" id="animal-info">
-<div class="card mb-3" style="padding-top: 1rem;">
-  <!-- <img src="{{ animal['photos'][0]['medium'] }}" class="card-img-top" alt="..."> -->
-  <h3 class="card-title">{{ animal['name']|safe|title }}</h3>
-  {% if animal.get('photos') %}
-    {% if animal['photos']|length > 1 %}
+    <div class="card mb-3" style="padding-top: 1rem;">
+      <h3 class="card-title">{{ animal['name']|safe|title }}</h3>
+      {% if animal.get('photos') %}
+      {% if animal['photos']|length > 1 %}
       <div class="image-grid-container mt-3">
         {% for photo in animal['photos'] %}
-          <img src="{{ photo['medium'] }}" id="photos">
+          <img src="{{ photo['medium'] }}" class="photos">
         {% endfor %}</div>
-    {% elif animal['photos']|length == 1 %}
+      {% elif animal['photos']|length == 1 %}
       <div class="container">
-        <img src="{{ animal['photos'][0]['medium'] }}" id="photos" class="center">
+        <img src="{{ animal['photos'][0]['medium'] }}" class="photos center">
       </div>
     {% endif %}
-  {% endif %}
+    {% endif %}
 
   <div class="card-body">
     <div class="card-text">
@@ -120,11 +118,9 @@
 <p id="org-id" data-org-id="{{ animal['organization_id'] }}"></p>
 
 
-
-
 <div id="recently-viewed">
 {% if recently_viewed_animals != []  %}
-<h3>Recently viewed animals</h3>
+<h2>Recently viewed animals</h2>
 <div class="row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-xs-1 g-5">{% for recent_animal in recently_viewed_animals %}
   <div class="col">{% if recent_animal['animal_type'] == 'dog' %}
     <a href="/dog/{{ recent_animal['org_id'] }}/{{ recent_animal['animal_id'] }}">

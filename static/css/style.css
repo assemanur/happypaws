@@ -20,11 +20,11 @@
     height: 300px;
   }
 
-  #photos {
+  .photos {
     height: 300px;
     margin-bottom: 5px;
     margin-right: 5px;
-    margin-left: 5px;
+    margin-left: 20px;
     border-radius: 5px;
   }
 
@@ -32,6 +32,23 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  h1, h2 {
+    text-align: center;
+    color:#A41165;
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    text-align: center;
+    color: #4b274b;
+    margin-bottom: 20px;
+  }
+
+  h4 {
+    text-align: center;
+    color: #fff
   }
 
   .category {
@@ -227,3 +244,7 @@
   text-align: center;
 }
 
+body .prints {
+  background-image: url('/static/img/paw-prints.png');
+  background-size: cover;
+}

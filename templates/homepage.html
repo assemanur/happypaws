@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
-{% block title %}Pet Shelter Home{% endblock %}
+
+{% block title %}HappyPaws{% endblock %}
 
 {% block head %}
 <script type="text/javascript">
@@ -26,10 +27,6 @@
     }
   }
 </script>
-
-<style>
-
-</style>
 {% endblock %}
 
 {% block body %}
@@ -139,7 +136,7 @@ padding: 20px;">
 
 <div id="recently-viewed">
 {% if recently_viewed_animals != []  %}
-<h3>Recently viewed animals</h3>
+<h2>Recently viewed animals</h2>
 <div class="row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-xs-1 g-5">{% for recent_animal in recently_viewed_animals %}
   <div class="col">{% if recent_animal['animal_type'] == 'dog' %}
     <a href="/dog/{{ recent_animal['org_id'] }}/{{ recent_animal['animal_id'] }}">

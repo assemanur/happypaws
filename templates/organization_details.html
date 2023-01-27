@@ -2,48 +2,72 @@
 
 {% block title %}View Organization{% endblock %}
 
-{% block head %}
-<style></style>
-{% endblock %}
 
 {% block body %} 
 
+<div class="row">
+  <div class="col-9">
+    <div class="card mb-3" style="padding-top: 1rem;">
+      <h3 class="card-title">{{ organization['name'] }}</h3>
+      {% if organization.get('photos') %}
+      {% if organization['photos']|length > 1 %}
+      <div class="image-grid-container mt-3">
+        {% for photo in organization['photos'] %}
+        <img src="{{ photo['medium'] }}" class="photos">
+        {% endfor %}
+      </div>
+      {% elif organization['photos']|length == 1 %}
+      <div class="container">
+        <img src="{{ organization['photos'][0]['medium'] }}" class="photos center">
+      </div>
+      {% endif %}
+      {% else %}
+      <div class="container">
+        <img src="/static/img/organization.jpg" class="photos center">
+      </div>
+      {% endif %}
+      <div class="card-body">
+        <div class="card-text">
+          <ul class="list-group list-group-flush">
+            {% if organization.get('website') %}
+            <li class="list-group-item text-start">
+              Go to {{ organization['name'] }}'s <a href="{{ organization['website'] }}">website</a>.
+            </li>{% endif %}
+            {% if organization['address']['city'] %}
+            <li class="list-group-item text-start">
+              {{ organization['address']['city'] }}, {{ organization['address']['state'] }}
+            </li>{% endif %}
+            {% if organization['email'] %}
+            <li class="list-group-item text-start">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+                <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
+              </svg>: <a href="mailto:{{ organization['email'] }}">{{ organization['email'] }}</a>
+              {% if organization['phone'] %}
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-telephone" viewBox="0 0 16 16">
+                <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+              </svg>: <a href="tel:{{ organization['phone'] }}">{{ organization['phone'] }}</a></p><br>
+              {% endif %}
+            </li>{% endif %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div class="col-3">
+      <script> let googleGeoKey = "{{ google_geo_key }}"</script>
+      <p id="zipcode" data-zipcode="{{ organization['address']['postcode'] }}"></p>
+      
+      <div id="map" style="height: 350px; width: 350px; border-radius: 5px;"></div>
+      <script src="/static/js/map.js"></script>
 
-<h1>Organizations Nearby</h1>
-
-
-<p>{{ organization['name'] }}</p>
-{% if organization.get('photos') %}
-<img src="{{ organization['photos'][0]['medium'] }}">
-{% else %}
-<img src="/static/img/organization.jpg">
-{% endif %}
-{% if organization.get('website') %}
-<p>Go to {{ organization['name'] }}'s <a href="{{ organization['website'] }}">website</a>.</p>
-{% endif %}
-<p id="city">{{ organization['address']['city'] }}, {{ organization['address']['state'] }}, {{ organization['address']['postcode'] }}</p>
-
-<!-- Google Geocoding API Key -->
-<script> let googleGeoKey = "{{ google_geo_key }}"</script>
-<p id="zipcode" data-zipcode="{{ organization['address']['postcode'] }}"></p>
-
-{% if organization.get('email') %}
-<p><a href="mailto:{{ organization['email'] }}?subject=Inquiry from HappyPaws user&body=Hi, I am interested in your adopting policy. Could you please send me the application form and details on the application process? ">{{ organization['email'] }}</a></p><br>
-{% endif %}
-{% if organization.get('phone') %}
-<p><a href="tel:{{ organization['phone'] }}">Phone: {{ organization['phone'] }}</a></p><br>
-{% endif %}
+      <script async src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initOrgMap"></script>
+    </div>
+</div>
 
 <p id="org-id" data-org-id="{{ organization['id'] }}"></p>
 
-
-<!-- Inserting Google Map to show the location of the shelter where chosen animal is -->
-<div id="map" style="height: 350px; width: 350px;"></div>
-<script src="/static/js/map.js"></script>
-
-
 <div id="available-animals-at-organization">
-  <h3>Animals available for adoption at {{ organization['name'] }}</h3>
+  <h2>Animals available for adoption at {{ organization['name'] }}</h2>
   <div class="row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-xs-1 g-5">
     {% for animal in animals %}
     <div class="col">
@@ -53,13 +77,13 @@
         <img src="{{ animal['photos'][0]['full'] }}" class="card-img-top" alt="animal">
         {% else %}
           {% if animal['type'] == 'Dog' %}
-          <img src="https://media.istockphoto.com/id/942318196/vector/dog-puppy-smiling-funny-animals-coloring-pages-cartoon-vector-illustration.jpg?s=612x612&w=0&k=20&c=VmV1zfZ56Kulm6nbf3wzeZfef3DwIHpT22lt4dK52nA="><br>
+          <img src="/static/img/dog_placeholder.jpeg"><br>
           {% elif animal['type'] == 'Cat' %}
-          <img src="https://i.etsystatic.com/7867651/r/il/929251/1234114682/il_1588xN.1234114682_1t12.jpg"><br>
+          <img src="/static/img/cat_placeholder.jpeg"><br>
           {% elif animal['type'] == 'Rabbit' %}
-          <img src="https://i.etsystatic.com/21185388/r/il/dc90fa/2226677215/il_1588xN.2226677215_6bov.jpg"><br>
+          <img src="/static/img/rabbit_placeholder.jpeg"><br>
           {% elif animal['type'] == 'Bird' %}
-          <img src="https://i.etsystatic.com/33889596/r/il/1e530a/3744462889/il_1588xN.3744462889_4k4v.jpg"><br>
+          <img src="/static/img/bird_placeholder.jpeg"><br>
           {% endif %}
         {% endif %}</a>
         <div class="card-body">
@@ -70,10 +94,5 @@
   </div>
     {% endfor %}
 </div>
-
-
-<!-- Google Maps -->
-<script async src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initOrgMap"></script>
-<script></script>
 
 {% endblock %}

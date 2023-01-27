@@ -1,11 +1,10 @@
 {% extends 'base.html' %}
+
 {% block title %}Favorites{% endblock %}
 
 {% block body %}
-
-
 <div>
-    <h3>Your favorites</h3>
+    <h1>Your favorites</h1>
     {% if favorites != []  %}
     <div class="row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-xs-1 g-5">
         {% for favorite in favorites %}
@@ -38,11 +37,58 @@
         {% endfor %}
         </div>
     {% else %} 
-    <h5>Your list is empty.</h5>
-    <a href="/animals/dog">Dogs</a>
-    <a href="/animals/cat">Cats</a>
-    <a href="/animals/rabbit">Rabbits</a>
-    <a href="/animals/bird">Birds</a>
+    <h4>Looks like your list is empty. Let's find you a pur-fect match.</h4>
+    <div class="search-by-animal-type" style="
+    height: auto;
+    padding: 20px;">  
+      <div class="row">
+        <div class="col">
+          <div class="card">
+            <a href="/animals/dog">
+              <img src="/static/img/dog.jpg" class="category"></a>      
+              <div class="card-body">
+                <h5 class="card-title">Search dogs</h5>
+              </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <a href="/animals/cat">
+              <img src="/static/img/cat.jpg" class="category"></a>      
+              <div class="card-body">
+                <h5 class="card-title">Search cats</h5>
+              </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <a href="/animals/rabbit">
+              <img src="/static/img/rabbit.jpg" class="category"></a>      
+              <div class="card-body">
+                <h5 class="card-title">Search rabbits</h5>
+              </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <a href="/animals/bird">
+              <img src="/static/img/bird.jpg" class="category"></a>      
+              <div class="card-body">
+                <h5 class="card-title">Search birds</h5>
+              </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <a href="/view/organizations">
+              <img src="/static/img/organization_main.jpg" class="category"></a>      
+              <div class="card-body">
+                <h5 class="card-title">Search organizations</h5>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
 {% endif %}   
 </div>
 
