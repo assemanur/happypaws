@@ -1,6 +1,6 @@
 """Server for pet shelter website."""
 
-from flask import (Flask, render_template, request, flash, session, redirect, jsonify)
+from flask import (Flask, render_template, request, flash, session, redirect)
 from model import connect_to_db, db
 import crud, os, requests
 from jinja2 import StrictUndefined
@@ -55,6 +55,7 @@ def search_with_keyword():
     animals = crud.search_animals_by_breed(breed, location)
     
     return render_template('animals.html', animals=animals)
+
 
 
 @app.route('/animals/<animal_type>')
@@ -401,22 +402,6 @@ def show_favorites():
         user_id = crud.get_user_by_email(logged_in_email).user_id
 
     return render_template("favorites.html", favorites=crud.get_favorites_by_user_id(user_id))
-
-
-@app.route('/user/update/zipcode', methods=["POST"])
-def update_user_zipcode():
-    """Update user zipcode."""
-
-    zipcode = request.form.get('zipcode')
-    email = session.get('user_email', None)
-    if not email:
-        flash("Please log in or create an account!", 'warning')
-
-    user = crud.update_zipcode(email, zipcode)
-    db.session.commit()
-    flash("Zipcode has been updated.", 'success')
-        
-    return redirect(f'/user')
 
 
 @app.route('/user/update/form', methods=["POST"])

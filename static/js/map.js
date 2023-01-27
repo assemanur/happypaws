@@ -5,7 +5,7 @@ const zipcode = document.querySelector('#zipcode').dataset.zipcode;
 // Initializing map on animal_details page
 function initMap() {
 
-  fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${zipcode}&key=${googleGeoKey}`)
+  fetch(`https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:${zipcode}|country:US&key=${googleGeoKey}`)
   .then((response) => {
     return response.json();
   })
@@ -25,12 +25,9 @@ function initMap() {
     position: animalCoords,
     title: 'animal',
     map: basicMap,
+    icon: "/static/img/paw-marker.png",
   });
-
-  animalMarker.addListener('click', () => {
-    alert('Hi!');
-  });
-
+  
   const animalInfo = new google.maps.InfoWindow({
     content: '<p>I am waiting for you!</p>',
   });
@@ -42,7 +39,7 @@ function initMap() {
 // Initializing Map on organization_details page
 function initOrgMap() {
   console.log(zipcode);
-  fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${zipcode}&key=${googleGeoKey}`)
+  fetch(`https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:${zipcode}|country:US&key=${googleGeoKey}`)
   .then((response) => {
     console.log(response);
     return response.json();
@@ -64,10 +61,7 @@ function initOrgMap() {
     position: organizationCoords,
     title: 'organization',
     map: basicMap,
-  });
-
-  organizationMarker.addListener('click', () => {
-    alert('Hi!');
+    icon: "/static/img/organization-marker.png",
   });
 
   const organizationInfo = new google.maps.InfoWindow({

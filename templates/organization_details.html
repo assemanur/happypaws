@@ -27,7 +27,9 @@
 <script> let googleGeoKey = "{{ google_geo_key }}"</script>
 <p id="zipcode" data-zipcode="{{ organization['address']['postcode'] }}"></p>
 
+{% if organization.get('email') %}
 <p><a href="mailto:{{ organization['email'] }}?subject=Inquiry from HappyPaws user&body=Hi, I am interested in your adopting policy. Could you please send me the application form and details on the application process? ">{{ organization['email'] }}</a></p><br>
+{% endif %}
 {% if organization.get('phone') %}
 <p><a href="tel:{{ organization['phone'] }}">Phone: {{ organization['phone'] }}</a></p><br>
 {% endif %}

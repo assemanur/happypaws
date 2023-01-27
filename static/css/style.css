@@ -2,21 +2,36 @@
  * Always set the map height explicitly to define the size of the div element
  * that contains the map. 
  */
+
+ body {
+  background-color: #CCBDCC;
+  background-size: cover;
+  background-position: relative;
+  margin-top: 100px;
+  padding-bottom: 5%;
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif ;
+}
+
  #map {
     height: 100%;
   }
 
-  /* body {
-    padding-top: 5%;
-    /* display: flex; */
-	  /* justify-content: left;
-	  height: 100vh;
-    background-color: #ccbdcc;
-  } */
-
   img {
     height: 300px;
-    width: 350;
+  }
+
+  #photos {
+    height: 300px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+    margin-left: 5px;
+    border-radius: 5px;
+  }
+
+  .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .category {
@@ -24,35 +39,17 @@
     border-radius: 10px;
     margin: 10px;
   }
-
-  body {
-    background-color: #CCBDCC;
-    background-size: cover;
-    background-position: relative;
-    margin-top: 100px;
   
-  }
-  
-  
-  /* @media (max-width: 979px) {
-    body {
-      padding-top: 0px;
-    }
-  } */
 
 /**** Flash Messages Style ****/
 .alert-success {
   background-color: #88a763;
+  border-color: #A6BB8D;
 }
-
-/* .alert .alert-warning {
-  color: #bebb50
-} */
 
 /**** Nav Bar Style ****/
 .navbar {
   padding: 0px;
-  
 }
 
 .navbar .navbar-main {
@@ -80,33 +77,11 @@
   color: #faf3f5;
 }
 
-/* for dropdown only - change the color of droodown */
-/* .navbar-custom .dropdown-menu {
-  background-color: #ff5500;
-}
-
-.navbar-custom .dropdown-item {
-  color: #ffffff;
-}
-
-.navbar-custom .dropdown-item:hover,
-.navbar-custom .dropdown-item:focus {
-  color: #FA7070;
-  background-color: rgba(255,255,255,.5);
-} */
-
 /**** Modal Forms Style ****/
 
-/* body {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100vh;
-  background-color: thistle;
- } */
-
 .modal-content{
-  background: #CCBDCC;
+  background: #b6c6a2;
+  top: 40px;
 }
 
 .btn-close {
@@ -123,35 +98,43 @@
 .form-area {
 	padding: 3em;
 	max-width: 100%;
-  background: #A6BB8D;
-	color: #fff;
-	box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.5);
+  background: #b6c6a2;
 }
 
 .form-control {
   background-color: inherit;
-  color: #fff;
+  color: #CCBDCC;
   padding-left: 0;
   border: 1px solid #fff;
   border-radius: 0;
 }
 
+.card .user-profile {
+  background-color: #fff;
+  /* border: none; */
+}
+
+#save-changes {
+  color: #CCBDCC;
+  background-color: #A41165;
+}
+
+.form-control, .profile, .user-profile {
+  color: #654265;
+  background-color: #fff;
+  border-color: #654265;
+}
+
 .form-area .btn {
-	width: 100%;
-	font-weight: 800;
+	width: 50%;
+  margin: 0 auto;
+  display: block;
+	font-weight: 500;
 	background-color: #fff;
+  color: #A41165;
 	padding: 0.5em 0;
 	border-radius: 50px;
 }
-
-/* .btn.btn-primary {
-	padding: 7px 20px;
-	font-family: alfa slab one;
-	font-size: 16px;
-	letter-spacing: 2px;
-	border-radius: 50px;
-  background-color: #FA7070;
-} */
 
 .form-area .btn:hover {
   background-color: inherit;
@@ -167,7 +150,7 @@
 
 .form-area p a {
   color: #e1e1e1;
-  text-decoration: none;
+  text-decoration:solid;
 }
 
 .form-area p a:hover {
@@ -176,6 +159,7 @@
 
 .modal-backdrop {
   z-index: auto;
+  top: auto;
 }
 
 #SignUpModalForm.active,
@@ -191,15 +175,6 @@
   transition: .5s;
   pointer-events: none;
 }
-
-  /* @media (max-width: 600px){
-    .form-area{
-        padding: 1.5em;
-    }
-    .form-area h1{
-        font-size: 18px;
-    }
-  } */
 
 
 /**** Cards Style  ****/
@@ -224,11 +199,31 @@
   color: #6a4c6a
 }
 
-#unfavorite-button {
+#favorite-button, #unfavorite-button, #email-btn {
   color: #CCBDCC;
   background-color: #A41165;
+  border-color: #A41165;
 }
+
+#favorite-button:hover, #unfavorite-button:hover, #email-btn:hover {
+  color: #A41165;
+  background-color: #CCBDCC;
+  border-color: #A41165;
+}
+
+/* #email-btn {
+  color: #A41165;
+  background-color: #CCBDCC;
+  border-color: #A41165;
+}
+
+#email-btn:hover {
+  color: #CCBDCC;
+  background-color: #A41165;
+  border-color: #A41165;
+} */
 
 .card-body {
   text-align: center;
 }
+
