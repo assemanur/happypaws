@@ -21,21 +21,22 @@ app.jinja_env.undefined = StrictUndefined
 def homepage():
     """View homepage."""
 
-    # API request for user's geolocation in case if user profile doesn't have zipcode saved.
+    # API request for user's geolocation in case user profile doesn't have zipcode saved.
     response = requests.get("http://ip-api.com/json/")
     response = response.json()
     zip = response['zip']
-    print(zip)
+    # Saving user's zipcode in the session
     session["zipcode"] = zip
 
-    #Sending Petfinder API request to get API token.
+    # Sending Petfinder POST API request to get API access token.
     crud.get_token()
-    
+    # Querying for breed options from Petfinder
     dog_breeds_db = crud.get_breeds_by_animal_type("dog")
     cat_breeds_db = crud.get_breeds_by_animal_type("cat")
     rabbit_breeds_db = crud.get_breeds_by_animal_type("rabbit")
     bird_breeds_db = crud.get_breeds_by_animal_type("bird")
 
+    # Querying the database for recently viewed animals by a particular user
     logged_in_email = session.get("user_email")
     if not logged_in_email:
         recently_viewed = []
@@ -48,20 +49,18 @@ def homepage():
 
 @app.route('/', methods=["POST"])
 def search_with_keyword():
-
+    # Sending CRUD request for a specific breed and zipcode user entered
     breed = request.form.get('breed')
     location = request.form.get('location')
-    print(f"\033[36m█▓▒░ | Search form has been submitted \033[0m")
     animals = crud.search_animals_by_breed(breed, location)
     
     return render_template('animals.html', animals=animals)
 
 
-
 @app.route('/animals/<animal_type>')
 def show_animals(animal_type):
     """Get a view of selected category of animals available for adoption."""
-
+    #  Grabbing user's zipcode
     logged_in_email = session.get("user_email")
     if logged_in_email is None:
         zipcode = session.get('zipcode')
@@ -71,7 +70,7 @@ def show_animals(animal_type):
             zipcode = session.get('zipcode')
         else:
             zipcode = user.zipcode
-
+    # Sending CRUD request to show animals near user's location
     animals=crud.get_animals_view(animal_type, zipcode=zipcode)
     
     return render_template('animals.html', animals=animals)
@@ -80,15 +79,14 @@ def show_animals(animal_type):
 @app.route('/dog/<org_id>/<animal_id>')
 def show_dog_details(org_id, animal_id):
     """View detailed information about the dog with specific id."""
-
+    # HTML page title
     context = {
-        'title': "Adoptable Dog",
-        'header': 'Adopt a Dog'
+        'title': "Adoptable Dog"
     }
 
     animal=crud.get_animal_by_id(animal_id)
 
-    # Storing viewed animal to the database
+    # Storing viewed animal in the database
     logged_in_email = session.get("user_email")
     if not logged_in_email:
         recently_viewed = []
@@ -102,17 +100,10 @@ def show_dog_details(org_id, animal_id):
             photos = animal.get('primary_photo_cropped')
             image = photos.get('small')
         else:
-            if animal.get('type') == 'Dog':
-                image = "https://media.istockphoto.com/id/942318196/vector/dog-puppy-smiling-funny-animals-coloring-pages-cartoon-vector-illustration.jpg?s=612x612&w=0&k=20&c=VmV1zfZ56Kulm6nbf3wzeZfef3DwIHpT22lt4dK52nA="
-            elif animal.get('type') == 'Cat':
-                image = "https://i.etsystatic.com/7867651/r/il/929251/1234114682/il_1588xN.1234114682_1t12.jpg"
-            elif animal.get('type') == "Rabbit":
-                image = "https://i.etsystatic.com/21185388/r/il/dc90fa/2226677215/il_1588xN.2226677215_6bov.jpg"
-            elif animal.get('type') == "Bird":
-                image = "https://i.etsystatic.com/33889596/r/il/1e530a/3744462889/il_1588xN.3744462889_4k4v.jpg"
+            image = "/static/img/dog_placeholder.jpeg"
+            
         viewed_animal = crud.create_viewed_animal(user_id, animal_id, name, type, breed, image, org_id)
         recently_viewed = crud.get_viewed_by_user_id(user_id)
-        print(f"\033[35m█▓▒░ | {name} has been added to viewed_animals table \033[0m")
 
     return render_template('animal_details.html', context=context, animal=animal, recently_viewed_animals=recently_viewed, google_maps_api_key=GOOGLE_MAPS_KEY, google_geo_key=GOOGLE_GEOCODING_KEY)
 
@@ -120,15 +111,14 @@ def show_dog_details(org_id, animal_id):
 @app.route('/cat/<org_id>/<animal_id>')
 def show_cat_details(org_id, animal_id):
     """View detailed information about the cat with specific id."""
-    
+    # HTML page title
     context = {
-        'title': "Adoptable Cat",
-        'header': 'Adopt a Cat'
+        'title': "Adoptable Cat"
     }
 
     animal=crud.get_animal_by_id(animal_id)
 
-    # Storing viewed animal to the database
+    # Storing viewed animal in the database
     logged_in_email = session.get("user_email")
     if not logged_in_email:
         recently_viewed = []
@@ -142,17 +132,10 @@ def show_cat_details(org_id, animal_id):
             photos = animal.get('primary_photo_cropped')
             image = photos.get('small')
         else:
-            if animal.get('type') == 'Dog':
-                image = "https://media.istockphoto.com/id/942318196/vector/dog-puppy-smiling-funny-animals-coloring-pages-cartoon-vector-illustration.jpg?s=612x612&w=0&k=20&c=VmV1zfZ56Kulm6nbf3wzeZfef3DwIHpT22lt4dK52nA="
-            elif animal.get('type') == 'Cat':
-                image = "https://i.etsystatic.com/7867651/r/il/929251/1234114682/il_1588xN.1234114682_1t12.jpg"
-            elif animal.get('type') == "Rabbit":
-                image = "https://i.etsystatic.com/21185388/r/il/dc90fa/2226677215/il_1588xN.2226677215_6bov.jpg"
-            elif animal.get('type') == "Bird":
-                image = "https://i.etsystatic.com/33889596/r/il/1e530a/3744462889/il_1588xN.3744462889_4k4v.jpg"
+            image = "/static/img/cat_placeholder.jpeg"
+
         viewed_animal = crud.create_viewed_animal(user_id, animal_id, name, type, breed, image, org_id)
         recently_viewed = crud.get_viewed_by_user_id(user_id)
-        print(f"\033[35m█▓▒░ | {name} has been added to viewed_animals table \033[0m")
 
     return render_template('animal_details.html', context=context, animal=animal, recently_viewed_animals=recently_viewed, google_maps_api_key=GOOGLE_MAPS_KEY, google_geo_key=GOOGLE_GEOCODING_KEY)
 
@@ -160,15 +143,14 @@ def show_cat_details(org_id, animal_id):
 @app.route('/rabbit/<org_id>/<animal_id>')
 def show_rabbit_details(org_id, animal_id):
     """View detailed information about the rabbit with specific id."""
-    
+    # HTML page title
     context = {
-        'title': "Adoptable Rabbit",
-        'header': 'Adopt a Rabbit'
+        'title': "Adoptable Rabbit"
     }
 
     animal=crud.get_animal_by_id(animal_id)
 
-    # Storing viewed animal to the database
+    # Storing viewed animal in the database
     logged_in_email = session.get("user_email")
     if not logged_in_email:
         recently_viewed = []
@@ -182,17 +164,10 @@ def show_rabbit_details(org_id, animal_id):
             photos = animal.get('primary_photo_cropped')
             image = photos.get('small')
         else:
-            if animal.get('type') == 'Dog':
-                image = "https://media.istockphoto.com/id/942318196/vector/dog-puppy-smiling-funny-animals-coloring-pages-cartoon-vector-illustration.jpg?s=612x612&w=0&k=20&c=VmV1zfZ56Kulm6nbf3wzeZfef3DwIHpT22lt4dK52nA="
-            elif animal.get('type') == 'Cat':
-                image = "https://i.etsystatic.com/7867651/r/il/929251/1234114682/il_1588xN.1234114682_1t12.jpg"
-            elif animal.get('type') == "Rabbit":
-                image = "https://i.etsystatic.com/21185388/r/il/dc90fa/2226677215/il_1588xN.2226677215_6bov.jpg"
-            elif animal.get('type') == "Bird":
-                image = "https://i.etsystatic.com/33889596/r/il/1e530a/3744462889/il_1588xN.3744462889_4k4v.jpg"
+            image = "/static/img/rabbit_placeholder.jpeg"
+
         viewed_animal = crud.create_viewed_animal(user_id, animal_id, name, type, breed, image, org_id)
         recently_viewed = crud.get_viewed_by_user_id(user_id)
-        print(f"\033[35m█▓▒░ | {name} has been added to viewed_animals table \033[0m")
 
     return render_template('animal_details.html', context=context, animal=animal, recently_viewed_animals=recently_viewed, google_maps_api_key=GOOGLE_MAPS_KEY, google_geo_key=GOOGLE_GEOCODING_KEY)
 
@@ -200,15 +175,14 @@ def show_rabbit_details(org_id, animal_id):
 @app.route('/bird/<org_id>/<animal_id>')
 def show_bird_details(org_id, animal_id):
     """View detailed information about the bird with specific id."""
-    
+    # HTML page title
     context = {
-        'title': "Adoptable Bird",
-        'header': 'Adopt a Bird'
+        'title': "Adoptable Bird"
     }
 
     animal=crud.get_animal_by_id(animal_id)
 
-    # Storing viewed animal to the database
+    # Storing viewed animal in the database
     logged_in_email = session.get("user_email")
     if not logged_in_email:
         recently_viewed = []
@@ -222,17 +196,10 @@ def show_bird_details(org_id, animal_id):
             photos = animal.get('primary_photo_cropped')
             image = photos.get('small')
         else:
-            if animal.get('type') == 'Dog':
-                image = "https://media.istockphoto.com/id/942318196/vector/dog-puppy-smiling-funny-animals-coloring-pages-cartoon-vector-illustration.jpg?s=612x612&w=0&k=20&c=VmV1zfZ56Kulm6nbf3wzeZfef3DwIHpT22lt4dK52nA="
-            elif animal.get('type') == 'Cat':
-                image = "https://i.etsystatic.com/7867651/r/il/929251/1234114682/il_1588xN.1234114682_1t12.jpg"
-            elif animal.get('type') == "Rabbit":
-                image = "https://i.etsystatic.com/21185388/r/il/dc90fa/2226677215/il_1588xN.2226677215_6bov.jpg"
-            elif animal.get('type') == "Bird":
-                image = "https://i.etsystatic.com/33889596/r/il/1e530a/3744462889/il_1588xN.3744462889_4k4v.jpg"
+            image = "/static/img/bird_placeholder.jpeg"
+
         viewed_animal = crud.create_viewed_animal(user_id, animal_id, name, type, breed, image, org_id)
         recently_viewed = crud.get_viewed_by_user_id(user_id)
-        print(f"\033[35m█▓▒░ | {name} has been added to viewed_animals table \033[0m")
 
     return render_template('animal_details.html', context=context, animal=animal, recently_viewed_animals=recently_viewed, google_maps_api_key=GOOGLE_MAPS_KEY, google_geo_key=GOOGLE_GEOCODING_KEY)
 
@@ -242,6 +209,7 @@ def show_organizations():
     """Get a view of organizations nearby."""
 
     logged_in_email = session.get("user_email")
+
     if logged_in_email is None:
         zipcode = session.get('zipcode')
     else:
@@ -262,8 +230,6 @@ def show_organization_details(org_id):
 
     organization = crud.get_organization(org_id)
     animals = crud.get_animals_by_organization(org_id)
-    for animal in animals:
-        print(animal['name'])
 
     return render_template('organization_details.html', organization=organization, animals=animals, google_maps_api_key=GOOGLE_MAPS_KEY, google_geo_key=GOOGLE_GEOCODING_KEY)
 
@@ -288,16 +254,15 @@ def favorite_animal(animal_id):
             image = photos.get('small')
         else:
             if animal.get('type') == 'Dog':
-                image = "https://media.istockphoto.com/id/942318196/vector/dog-puppy-smiling-funny-animals-coloring-pages-cartoon-vector-illustration.jpg?s=612x612&w=0&k=20&c=VmV1zfZ56Kulm6nbf3wzeZfef3DwIHpT22lt4dK52nA="
+                image = "/static/img/dog_placeholder.jpeg"
             elif animal.get('type') == 'Cat':
-                image = "https://i.etsystatic.com/7867651/r/il/929251/1234114682/il_1588xN.1234114682_1t12.jpg"
+                image = "/static/img/cat_placeholder.jpeg"
             elif animal.get('type') == "Rabbit":
-                image = "https://i.etsystatic.com/21185388/r/il/dc90fa/2226677215/il_1588xN.2226677215_6bov.jpg"
+                image = "/static/img/rabbit_placeholder.jpeg"
             elif animal.get('type') == "Bird":
-                image = "https://i.etsystatic.com/33889596/r/il/1e530a/3744462889/il_1588xN.3744462889_4k4v.jpg"
+                image = "/static/img/bird_placeholder.jpeg"
         favorite = crud.create_favorite(user_id, animal_id, name, type, image, org_id)
         flash(f"{name} has been added to favorites list.", 'success')
-        print(f"\033[36m█▓▒░ | Favorite has been added to database \033[0m")
     
     return redirect(request.referrer)
 
@@ -310,14 +275,13 @@ def unfavorite_animal(animal_id):
 
     if logged_in_email is None:
         flash("Create or sign in to your account to add this pet to your favorites.", 'warning')
-        return redirect('/')
+        return redirect(request.referrer)
     else:
         user_id = crud.get_user_by_email(logged_in_email).user_id
         animal = crud.get_animal_by_id(animal_id)
         animal_id = animal.get('id')
         crud.delete_favorite(user_id=user_id, animal_id=animal_id)
         flash(f"{animal.get('name')} has been removed from your favorites list.", 'success')
-        print(f"\033[35m█▓▒░ | Favorite has been removed from db \033[0m")
     
     return redirect('/favorites')
 
@@ -364,8 +328,6 @@ def handle_login():
 
     email = request.form.get("email")
     password = request.form.get("password")
-    print(email)
-    print(password)
 
     user = crud.get_user_by_email(email)
     if not user:
@@ -376,7 +338,7 @@ def handle_login():
         session["user_email"] = user.email
         flash(f"Welcome back, {user.first_name}!", 'success')
 
-    return redirect('/')
+    return redirect(request.referrer)
 
 
 @app.route('/logout')
@@ -427,7 +389,6 @@ def update_user_profile():
 
     return redirect(f'/user')
     
-
 
 if __name__ == "__main__":
     connect_to_db(app)
