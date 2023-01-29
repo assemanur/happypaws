@@ -38,26 +38,6 @@ for user in users_data:
 
 model.db.session.add_all(users_in_db)
 
-#Inserting fake animals data into animals table
-# with open('data/animals_data.json') as l:
-#     animals_data = json.loads(l.read())
-
-# animals_in_db = []
-
-# for animal in animals_data:
-#     name = animal["animal_name"]
-#     db_animals = crud.create_animal(name)
-#     animals_in_db.append(db_animals)
-
-# model.db.session.add_all(animals_in_db)
-
-#Inserting sample favorites into favorites table
-# for n in range(100):
-#     random_user = choice(users_in_db)
-#     random_animal = choice(animals_in_db)
-
-#     favorite = crud.create_favorite(random_user, random_animal)
-#     model.db.session.add(favorite)
 
 """Sending API request to get all breeds for dogs, cats, rabbits, and birds."""
 dog_breeds = crud.get_dog_breeds()
