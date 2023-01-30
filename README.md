@@ -3,15 +3,15 @@
 
 ## Summary
 
-**HappyPaws** is a a pet adoption website dedicated to finding loving homes for homeless animals in need. HappyPaws connects pet owners with the perfect pet for their family.
+**HappyPaws**🐾 is a a pet adoption website dedicated to finding loving homes for homeless animals in need. HappyPaws🐾 connects pet owners with the perfect pet for their family.
 
 
-## About the Developer
+## About the Developer 👩🏻‍💻
 
-HappyPaws was created by Assema Nurakhmetova. Learn more about the developer on [LinkedIn](https://www.linkedin.com/in/assemanur/).
+HappyPaws🐾 was created by Assema Nurakhmetova. Learn more about the developer on [LinkedIn](https://www.linkedin.com/in/assemanur/).
 
 
-## Technologies
+## Technologies ⚙️
 
 **Tech Stack:**
 
@@ -30,7 +30,7 @@ HappyPaws was created by Assema Nurakhmetova. Learn more about the developer on 
 - Google Geocoding API
 - IP-API
 
-HappyPaws is an app built on a Flask server with a PostgreSQL database, with SQLAlchemy as the ORM. The front end templating uses Jinja2, the HTML was built using Bootstrap, and Javascript to interact with the backend. Animals view is rendered with Petfinder API. The map is built using the Google Maps API, zipcodes are converted into geographic coordinates with Google Geocoding API.
+HappyPaws🐾 is an app built on a Flask server with a PostgreSQL database, with SQLAlchemy as the ORM. The front end templating uses Jinja2, the HTML was built using Bootstrap, and Javascript to interact with the backend. Animals view is rendered with Petfinder API. The map is built using the Google Maps API, zipcodes are converted into geographic coordinates with Google Geocoding API.
 
 ## <a name="features"></a>Features
 
@@ -61,9 +61,9 @@ Users can also update their profile information:
 If interested in adopting, users can send email inquiry to the organization:
 ![](https://github.com/assemanur/happypaws/blob/main/static/img/readme/email%20inquiry.png "Send email inquiry")
 
-## <a name="installation"></a>Setup/Installation ⌨️
+## <a name="installation"></a>Setup/Installation 💻
 
-#### Requirements:
+#### Requirements: ✅
 
 - PostgreSQL
 - Python 3.10
@@ -75,7 +75,7 @@ Clone repository:
 ```
 $ git clone https://github.com/assemanur/happypaws.git
 ```
-Create a virtual environment🔮:
+Create a virtual environment:
 ```
 $ virtualenv env
 ```
@@ -83,11 +83,11 @@ Activate the virtual environment:
 ```
 $ source env/bin/activate
 ```
-Install dependencies🔗:
+Install dependencies:
 ```
 $ pip install -r requirements.txt
 ```
-Get your own secret keys🔑 for [Petfinder](https://www.petfinder.com/developers/), [Google Maps](https://developers.google.com/maps/documentation/javascript/get-api-key), and [Google Geocoding](https://developers.google.com/maps/documentation/geocoding/get-api-key). Save them to a file `secrets.sh`. Your file should look something like this:
+Get your own secret keys🔑🗝 for [Petfinder](https://www.petfinder.com/developers/), [Google Maps](https://developers.google.com/maps/documentation/javascript/get-api-key), and [Google Geocoding](https://developers.google.com/maps/documentation/geocoding/get-api-key). Save them to a file `secrets.sh`. Your file should look something like this:
 ```
 export PETFINDER_KEY="abc"
 export PETFINDER_SECRET="abc"
