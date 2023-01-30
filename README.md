@@ -38,23 +38,23 @@ Users can browse animals by animal type (dog, cat, rabbit, or bird):
 ![](https://github.com/assemanur/happypaws/blob/main/static/img/readme/categories.png "Search animals by category")
 
 Users can also browse organizations nearby:
-![]("Search organizations")
+![](https://github.com/assemanur/happypaws/blob/main/static/img/readme/search_organizations.png "Search organizations")
 
 User can also search animals by the breed and zipcode: 
-![]("Search by vthe breed and zipcode")
+![](https://github.com/assemanur/happypaws/blob/main/static/img/readme/custom_search.png "Search by vthe breed and zipcode")
 
 Users can view animal details and approximate location of the animal on the map:
-![]("View animal details")
+![](https://github.com/assemanur/happypaws/blob/main/static/img/readme/animal_details_1.png "View animal details")
 
 Users can create or sign in to existing account:
-![]("Sign in to HappyPaws")
+![](https://github.com/assemanur/happypaws/blob/main/static/img/readme/sign_in.png "Sign in to HappyPaws")
 
 Users can favorite animals:
 ![]("Favorite the animal")
-![]("Viewing favorited animals")
+![](https://github.com/assemanur/happypaws/blob/main/static/img/readme/favorites.png "Viewing favorited animals")
 
 Users can also update their profile information:
-![]("Updating user profile details")
+![](https://github.com/assemanur/happypaws/blob/main/static/img/readme/user_profile.png "Updating user profile details")
 
 If interested in adopting, users can send email inquiry to the organization:
-![]("Send email inquiry")
+![]( "Send email inquiry")
