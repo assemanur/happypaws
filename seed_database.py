@@ -2,7 +2,6 @@
 
 import os
 import json
-from random import choice
 
 import crud
 import model
