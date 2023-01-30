@@ -41,7 +41,7 @@ Users can also browse organizations nearby:
 ![](https://github.com/assemanur/happypaws/blob/main/static/img/readme/search_organizations.png "Search organizations")
 
 User can also search animals by the breed and zipcode: 
-![](https://github.com/assemanur/happypaws/blob/main/static/img/readme/custom_search.png "Search by vthe breed and zipcode")
+![](https://github.com/assemanur/happypaws/blob/main/static/img/readme/custom_search.png "Search by the breed and zipcode")
 
 Users can view animal details and approximate location of the animal on the map:
 ![](https://github.com/assemanur/happypaws/blob/main/static/img/readme/animal_details_1.png "View animal details")
