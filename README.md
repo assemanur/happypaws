@@ -60,3 +60,52 @@ Users can also update their profile information:
 
 If interested in adopting, users can send email inquiry to the organization:
 ![](https://github.com/assemanur/happypaws/blob/main/static/img/readme/email%20inquiry.png "Send email inquiry")
+
+## <a name="installation"></a>Setup/Installation ⌨️
+
+#### Requirements:
+
+- PostgreSQL
+- Python 3.10
+- Petfinder, Google Maps and Google Geocoding API keys
+
+To have this app running on your local computer, please follow the below steps:
+
+Clone repository:
+```
+$ git clone https://github.com/assemanur/happypaws.git
+```
+Create a virtual environment🔮:
+```
+$ virtualenv env
+```
+Activate the virtual environment:
+```
+$ source env/bin/activate
+```
+Install dependencies🔗:
+```
+$ pip install -r requirements.txt
+```
+Get your own secret keys🔑 for [Petfinder](https://www.petfinder.com/developers/), [Google Maps](https://developers.google.com/maps/documentation/javascript/get-api-key), and [Google Geocoding](https://developers.google.com/maps/documentation/geocoding/get-api-key). Save them to a file `secrets.sh`. Your file should look something like this:
+```
+export PETFINDER_KEY="abc"
+export PETFINDER_SECRET="abc"
+export GOOGLE_MAPS_KEY="abc"
+export GOOGLE_GEOCODING_KEY="abc"
+```
+Activate API keys.
+```
+$ source secrets.sh
+```
+Create your database and seed🌱 example data.
+```
+$ python3 seed_database.py
+```
+Run the app from the command line.
+```
+$ python3 server.py
+```
+If you want to check the database, run in interactive mode
+```
+$ psql pet_shelter

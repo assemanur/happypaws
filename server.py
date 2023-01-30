@@ -10,7 +10,6 @@ app = Flask(__name__)
 app.secret_key = 'dev'
 API_KEY = os.environ['PETFINDER_KEY']
 API_SECRET = os.environ['PETFINDER_SECRET']
-GEO_API = os.environ['GEOCODING_API']
 GOOGLE_MAPS_KEY = os.environ['GOOGLE_MAPS_KEY']
 GOOGLE_GEOCODING_KEY = os.environ['GOOGLE_GEOCODING_KEY']
 app.jinja_env.undefined = StrictUndefined
