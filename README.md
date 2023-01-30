@@ -35,7 +35,7 @@ HappyPaws is an app built on a Flask server with a PostgreSQL database, with SQL
 ## <a name="features"></a>Features
 
 Users can browse animals by animal type (dog, cat, rabbit, or bird):
-![]("Search animals by category")
+![](https://github.com/assemanur/happypaws/blob/main/static/img/readme/categories.png "Search animals by category")
 
 Users can also browse organizations nearby:
 ![]("Search organizations")
