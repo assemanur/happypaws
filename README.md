@@ -50,7 +50,9 @@ Users can create or sign in to existing account:
 ![](https://github.com/assemanur/happypaws/blob/main/static/img/readme/sign_in.png "Sign in to HappyPaws")
 
 Users can favorite animals:
-![](https://github.com/assemanur/happypaws/blob/main/static/img/readme/favorite.png)
+![](https://github.com/assemanur/happypaws/blob/main/static/img/readme/favorite.png "Favorite button")
+
+Users can see favorited animals:
 ![](https://github.com/assemanur/happypaws/blob/main/static/img/readme/favorites.png "Viewing favorited animals")
 
 Users can also update their profile information:
