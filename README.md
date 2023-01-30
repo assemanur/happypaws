@@ -50,11 +50,11 @@ Users can create or sign in to existing account:
 ![](https://github.com/assemanur/happypaws/blob/main/static/img/readme/sign_in.png "Sign in to HappyPaws")
 
 Users can favorite animals:
-![]("Favorite the animal")
+![](https://github.com/assemanur/happypaws/blob/main/static/img/readme/favorite.png)
 ![](https://github.com/assemanur/happypaws/blob/main/static/img/readme/favorites.png "Viewing favorited animals")
 
 Users can also update their profile information:
 ![](https://github.com/assemanur/happypaws/blob/main/static/img/readme/user_profile.png "Updating user profile details")
 
 If interested in adopting, users can send email inquiry to the organization:
-![]( "Send email inquiry")
+![](https://github.com/assemanur/happypaws/blob/main/static/img/readme/email%20inquiry.png "Send email inquiry")
