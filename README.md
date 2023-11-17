@@ -9,8 +9,7 @@
 ## About the Developer 👩🏻‍💻
 
 HappyPaws🐾 was created by Assema Nurakhmetova. Learn more about the developer on [LinkedIn](https://www.linkedin.com/in/assemanur/).
-<script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
-<div class="badge-base LI-profile-badge" data-locale="en_US" data-size="medium" data-theme="light" data-type="HORIZONTAL" data-vanity="assemanur" data-version="v1"><a class="badge-base__link LI-simple-link" href="https://www.linkedin.com/in/assemanur?trk=profile-badge">Assemgul Nurakhmetova</a></div>
+
               
 
 
